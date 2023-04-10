@@ -1,6 +1,6 @@
 # Workstation (use DNS if available)
 [workstation]
-127.0.0.1
+localhost
 
 # Media server (use DNS if available)
 [server]
