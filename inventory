@@ -1,1 +1,17 @@
-# in here name the servers IP or better the domain name
+# Workstation
+[workstation]
+127.0.0.1
+
+# Media server
+[jelly]
+192.x.x.x
+
+# Group for all servers
+[multi:children]
+workstation
+jelly
+
+# Variables that will be applied to all servers
+[multi:vars]
+ansible_user=sandro
+ansible_ssh_port=1804
