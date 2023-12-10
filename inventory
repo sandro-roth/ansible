@@ -3,16 +3,15 @@
 192.168.64.2
 
 # Media server
-[jelly]
-192.x.x.x
+#[jelly]
+#192.x.x.x
 
 # Group for all servers
-[multi:children]
-workstation
-jelly
+#[multi:children]
+#workstation
+#jelly
 
 # Variables that will be applied to all servers
-[multi:vars]
-ansible_user=sandro
-ansible_ssh_port=1804
-# ansible_ssh_private_key_file = N/A
+#[multi:vars]
+#ansible_user=sandro
+#ansible_ssh_port=1804
