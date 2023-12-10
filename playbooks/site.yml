@@ -30,6 +30,22 @@
         - "{{ php_package }}"
       state: latest
 
+  - name: change e-mail address inside config file of admin
+    tags: apache,ubuntu
+    lineinfile:
+      path: /etc/httpd/conf/http.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin somebody@somewhere.net
+    when: ansible_distribution == "Ubuntu"
+    register: hoselupf
+
+  - name: restart httpd (Ubuntu)
+    tags: apache,Ubuntu,httpd
+    service:
+      name: httpd
+      state: restarted
+    when: hoselupf.changed
+
   - name: copy html file for site
     tags: apache,apche2,httpd
     copy:
@@ -65,4 +81,13 @@
     community.general.pacman:
       name: mariadb
       state: latest
+    when: ansible_distribution == "Arch Linux"
+
+
+  - name: start mariadb (ArchLInux)
+    tags: mariadb,db,systemctl
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
     when: ansible_distribution == "Arch Linux"
