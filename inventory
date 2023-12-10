@@ -3,7 +3,7 @@
 192.168.64.2
 
 # Media server
-#[jelly]
+#[Jelly]
 #192.x.x.x
 
 # Group for all servers
