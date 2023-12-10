@@ -1,6 +1,6 @@
 # Workstation
-[workstation]
-127.0.0.1
+[ArchLin]
+192.168.64.2
 
 # Media server
 [jelly]
