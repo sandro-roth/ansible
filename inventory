@@ -1,9 +1,9 @@
 # Workstation
-[ArchLin]
+[workstations]
 192.168.64.2
 
 # Media server
-#[Jelly]
+#[web_server]
 #192.x.x.x
 
 # Group for all servers

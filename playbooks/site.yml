@@ -18,7 +18,7 @@
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
-- hosts: Jelly
+- hosts: web_server
   become: true
   tasks:
 
@@ -39,7 +39,24 @@
       group: root
       mode: 0644
 
-- hosts: ArchLin
+- hosts: workstation
+  become: true
+  tasks:
+
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: install terraform
+    unarchive:
+      src: http://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+      dest: /usr/local/bin
+      mode: 0755
+      owner: root
+      group: root
+
+
+- hosts: workstation
   become: true
   tasks:
 
