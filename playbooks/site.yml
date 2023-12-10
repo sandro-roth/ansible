@@ -30,11 +30,19 @@
         - "{{ php_package }}"
       state: latest
 
+  - name: copy html file for site
+    tags: apache,apche2,httpd
+    copy:
+      src: default_site.html
+      dest: /var/ww/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
 - hosts: ArchLin
   become: true
   tasks:
 
-#services need to be activated in arch linux!
   - name: install mariadb package (ArchLinux)
     tags: archlinux,db,mariadb
     community.general.pacman:
