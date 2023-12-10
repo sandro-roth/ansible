@@ -1,0 +1,43 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (ArchLinux)
+    tags: always
+    community.general.pacman:
+      update_cache: true
+      upgrade: true
+    when: ansible_distribution == "Arch Linux"
+
+  - name: install updates (Ubuntu)
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: Jelly
+  become: true
+  tasks:
+
+  - name: install apache and php package
+    tags: apache,apache2,ubuntu
+    package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+
+- hosts: ArchLin
+  become: true
+  tasks:
+
+#services need to be activated in arch linux!
+  - name: install mariadb package (ArchLinux)
+    tags: archlinux,db,mariadb
+    community.general.pacman:
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "Arch Linux"
