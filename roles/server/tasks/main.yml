@@ -13,13 +13,7 @@
     regexp: '^ServerAdmin'
     line: ServerAdmin somebody@somewhere.net
   when: ansible_distribution == "Ubuntu"
-
-- name: restart httpd (Ubuntu)
-  tags: apache,Ubuntu,httpd
-  service:
-    name: httpd
-    state: restarted
-  when: hoselupf.changed
+  notify: restart_apache
 
 - name: copy html file for site
   tags: apache,apche2,httpd
