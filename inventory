@@ -3,8 +3,8 @@
 192.168.64.2
 
 # Media server
-#[web_server]
-#192.x.x.x
+[web_server]
+192.168.64.4
 
 # Group for all servers
 #[multi:children]
