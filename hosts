@@ -1,6 +1,0 @@
-# Workstation (use DNS if available)
-[workstation]
-localhost
-
-# Media server (use DNS if available)
-[server]
