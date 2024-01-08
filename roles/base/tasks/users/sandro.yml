@@ -1,0 +1,6 @@
+  - name: users | sandro | create group
+    tags: groups, sandro, users
+    group:
+      name: sandro
+      state: present
+
