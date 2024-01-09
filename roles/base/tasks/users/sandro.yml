@@ -1,6 +1,36 @@
   - name: users | sandro | create group
     tags: groups, sandro, users
     group:
-      name: sandro
+      name: {{ ansible_nas_user }}
       state: present
 
+  - name: users | sandro | create user
+    tags: sandro, sudo, users
+    user:
+      name: sandro
+      group: sandro
+      groups: adm, ansible, {{ sudo_group }}
+      state: present
+      comment: "Sandro main"
+      password: "{{ sandro_passwd }}"
+      shell: /bin/bash
+
+  - name: users | sandro | add sudoers file
+    tages: sandro, settings, simone, sudo, system, users
+    copy:
+      src: users/sudoers_sandro
+      dest: /etc/sudoers.d/sandro
+      owner: root
+      group: root
+      mode: 0440
+
+  - name: users | sandro | create .ssh directory
+    tags: dotfiles, sandro, ssh, users
+    file:
+      path: "{{ item.dir }}"
+      state: directory
+      owner: sandro
+      group: sandro
+      mode: 0700
+    with_items:
+      - { dir: '/home/sandro/.ssh' }
