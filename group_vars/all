@@ -1,3 +1,6 @@
+# Main user (will be added to docker)
+ansible_nas_user: sandro
+
 # ssh default settings
 security_ssh_port: 1630
 security_ssh_password_authentication: "no"
