@@ -34,3 +34,11 @@
       mode: 0700
     with_items:
       - { dir: '/home/sandro/.ssh' }
+
+  - name: users | sandro | create .ssh directory
+    tags: dotfiles, sandro, ssh, users
+    authorized_key:
+      user: sandro
+      key: "{{ item }}"
+    with_file:
+      - users/sandro/ssh/id_ed25519.pub
