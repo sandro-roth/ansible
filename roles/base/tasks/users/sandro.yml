@@ -16,7 +16,7 @@
       shell: /bin/bash
 
   - name: users | sandro | add sudoers file
-    tages: sandro, settings, simone, sudo, system, users
+    tags: sandro, settings, simone, sudo, system, users
     copy:
       src: users/sudoers_sandro
       dest: /etc/sudoers.d/sandro
