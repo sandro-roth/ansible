@@ -1,10 +1,10 @@
-  #load distro-specific varialbes
-  - include_vars: "{{ ansible_distribution }}.yml"
-    tags: always
+#load distro-specific varialbes
+- include_vars: "{{ ansible_distribution }}.yml"
+  tags: always
 
-  - block:
-    # Create users on the system
-    - import_tasks: users/sandro.yml
-    - import_tasks: users/root.yml
-    - import_tasks: users/simone.yml
+- block:
+  # Create users on the system
+  - import_tasks: users/sandro.yml
+  - import_tasks: users/root.yml
+  - import_tasks: users/simone.yml
 
