@@ -1,7 +1,7 @@
   - name: users | sandro | create group
     tags: groups, sandro, users
     group:
-      name: {{ ansible_nas_user }}
+      name: sandro
       state: present
 
   - name: users | sandro | create user
@@ -35,10 +35,34 @@
     with_items:
       - { dir: '/home/sandro/.ssh' }
 
-  - name: users | sandro | create .ssh directory
-    tags: dotfiles, sandro, ssh, users
+  - name: users | sandro | add public key
+    tags: dotfiles, sandro, ssh, ssh-keys, users
     authorized_key:
       user: sandro
       key: "{{ item }}"
     with_file:
       - users/sandro/ssh/id_ed25519.pub
+
+  - name: users | sandro | create config directories
+    tags: dotfiles, sandro, tmux, users, vim, zsh
+    file:
+      path: /home/sandro/{{ item.dir }}
+      state: directory
+      owner: sandro
+      group: sandro
+      mode: 0700
+    with_items:
+      - { dir: '.bash' }
+      - { dir: '.config' }
+      - { dir: '.config/htop' }
+      - { dir: '.config/mc' }
+      - { dir: '.tmux' }
+      - { dir: '.tmux/config' }
+      - { dir: '.tmux/plugins' }
+      - { dir: '.vim' }
+      - { dir: '.vim/autoload' }
+      - { dir: '.vim/bundle' }
+      - { dir: '.vim/colors' }
+      - { dir: '.vim/ftplugin' }
+      - { dir: '.zsh' }
+
