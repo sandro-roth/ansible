@@ -1,0 +1,36 @@
+Banner /etc/issue.net
+PrintMOTD no
+
+Port {{ security_ssh_port | default(22) }}
+Protocol 2
+
+# Authentication:
+AllowUsers {{ security_ssh_allowed_users | default("sandro") }}
+ChallengeResponseAuthentication {{ security_ssh_challenge_response_auth | default("no") }}
+HostbasedAuthentication
+LoginGraceTime 120
+PasswordAuthentication {{ security_ssh_password_authentication | default("no") }}
+PermitEmptyPasswords {{ security_ssh_permit_empty_password | default("no") }}
+PermitRootLogin {{ security_ssh_permit_root_login | default("no") }}
+PubkeyAuthentication yes
+StrictModes yes
+UsePAM yes
+UseDNS {{ security_ssh_usedns | default("no") }}
+GSSAPIAuthentication {{ security_ssh_gss_api_authentification | default("no") }}
+X11Forwarding {{ security_ssh_x11_forwarding | default("no") }}
+
+# Security
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+IgnoreRhosts yes
+
+# Misc. options
+AcceptEnv LANG LC_*
+TCPKeepAlive yes
+Subsystem sftp {{ sftp_path }}
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
