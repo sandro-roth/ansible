@@ -8,3 +8,7 @@
   - import_tasks: users/root.yml
   - import_tasks: users/simone.yml
 
+  # Install software
+
+  # Perform remaining tasks
+  - import_tasks: system_setup/openssh.yml
