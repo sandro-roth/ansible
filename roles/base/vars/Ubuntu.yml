@@ -1,7 +1,7 @@
 amd_microcode_package: amd64-microcode
 cron_package: cron
 dconf_package: dconf-cli
-dns_utils_package: dnutils
+dns_utils_package: dnsutils
 intel_microcode_package: intel_microcode
 lm_sensor_package: lm-sensors
 nfs_client_package: nfs-common
