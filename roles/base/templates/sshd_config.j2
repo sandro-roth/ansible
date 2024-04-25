@@ -7,7 +7,7 @@ Protocol 2
 # Authentication:
 AllowUsers {{ security_ssh_allowed_users | default("sandro") }}
 ChallengeResponseAuthentication {{ security_ssh_challenge_response_auth | default("no") }}
-HostbasedAuthentication
+HostbasedAuthentication no
 LoginGraceTime 120
 PasswordAuthentication {{ security_ssh_password_authentication | default("no") }}
 PermitEmptyPasswords {{ security_ssh_permit_empty_password | default("no") }}
