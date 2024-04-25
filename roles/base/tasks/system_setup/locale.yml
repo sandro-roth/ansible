@@ -1,0 +1,17 @@
+- name: system setup | locale | add de_CH
+  tags: locale, system, setup
+  locale_gen:
+    name: de_CH.UTF-8
+    state: present
+
+- name: system setup | locale | set locale to de_CH
+  tags: locale, system, setup
+  locale_gen:
+    name: de_CH.UTF-8
+    state: present
+  register: locale
+
+- name: sytem setup | locale | set de_CH as default locale
+  tags: locale, system, setup
+  command: localectl set-locale LANG=de_CH.UTF-8
+  when: locale.changed
