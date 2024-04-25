@@ -1,4 +1,4 @@
-- name: system steup | utilities | install utilities packages
+- name: system setup | utilities | install utilities packages
   tags: packages, system, settings
   package:
     state: latest
