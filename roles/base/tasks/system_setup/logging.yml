@@ -8,6 +8,6 @@
 
 - name: system setup | logging | restart journald if config change
   service:
-    name: sysstemd-journald
+    name: systemd-journald
     state: restarted
   when: journald_config.changed
