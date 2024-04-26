@@ -3,6 +3,10 @@ branch: master
 
 ansible_cron_minute: "40"
 
+# platform-specific
+microcode_amd_install: false
+microcode_intel_install: false
+
 
 # Autoupdate mail settings used on Debian/Ubuntu only
 security_autoupdate_enabled: true
