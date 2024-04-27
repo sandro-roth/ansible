@@ -133,6 +133,14 @@
     force: yes
   notify: update_tmux_plugin_perms
 
+- name: users | sandr | clone tmux-pluginmanager plugin repository
+  tags: dotfiles, sandro, users, tmux
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: /home/sandro/.tmux/plugins/tpm
+    force: yes
+  notify: update_tmux_plugin_perms
+
 - name: users | sandro | copy individual zsh config files
   tags: dotfiles,sandro,users,zsh
   copy:
