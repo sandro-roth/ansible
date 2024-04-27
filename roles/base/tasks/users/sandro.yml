@@ -72,7 +72,7 @@
     src: users/sandro/tmux/tmux.conf.server
     dest: /home/sandro/.tmux.conf
     owner: sandro
-    owner: sandro
+    group: sandro
     mode: 0600
   when: "'server' in group_names"
 
@@ -83,7 +83,7 @@
     src: users/sandro/tmux/tmux.conf.workstation
     dest: /home/sandro/.tmux.conf
     owner: sandro
-    owner: sandro
+    group: sandro
     mode: 0600
   when: "'server' not in group_names"
 
