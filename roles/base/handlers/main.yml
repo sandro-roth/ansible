@@ -11,3 +11,17 @@
   service:
     name: fail2ban
     state: reloaded
+
+- name: update_tmux_plugin_perms
+  file:
+    path: /home/sandro/.tmux/plugins
+    owner: sandro
+    group: sandro
+    recurse: true
+
+- name: update_vim_bundle_perms
+  file:
+    path: /home/sandro/.vim/bundle
+    owner: sandro
+    group: sandro
+    recurse: true
