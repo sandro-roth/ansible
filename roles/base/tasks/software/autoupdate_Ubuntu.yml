@@ -1,10 +1,12 @@
 ---
-- name: Install unattended upgrades package.
+- name: software | Install unattended upgrades package | Ubuntu
+  tags: software, upgrades package
   package:
     name: unattended-upgrades
     state: present
 
-- name: Copy unattended-upgrades configuration files in place.
+- name: software | Copy unattended-upgrades | Ubuntu
+  tags: software, copy upgrades, ubuntu
   template:
     src: "{{ item }}.j2"
     dest: "/etc/apt/apt.conf.d/{{ item }}"
