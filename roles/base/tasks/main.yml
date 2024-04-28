@@ -14,6 +14,9 @@
   - import_tasks: software/packages_pip.yml
   - import_tasks: software/packages_utilities.yml
   - import_tasks: software/autoupdate_Ubuntu.yml
+    when:
+      - ansible_distribution == 'Ubuntu'
+      - security_autoupdate_enabled | bool
 
   # Perform remaining tasks
   - import_tasks: system_setup/clock.yml
