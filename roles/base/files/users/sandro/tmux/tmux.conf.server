@@ -93,6 +93,8 @@ set -g visual-activity on
 # Plugins
 run-shell /home/sandro/.tmux/plugins/continuum/continuum.tmux
 run-shell /home/sandro/.tmux/plugins/resurrect/resurrect.tmux
+run-shell /home/sandro/.tmux/plugins/completion/tmux
+run-shell /home/sandro/.tmux/plugins/tpm/tpm
 set -g @continuum-restore 'on'
 set -g @continuum-boot 'on'
 set -g @plugin 'tmux-plugins/tpm'
