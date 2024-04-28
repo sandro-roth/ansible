@@ -107,7 +107,7 @@ set -g window-status-activity-style bg=blue,fg=black
 set-option -g message-style bg=colour237,fg=colour231
 set-option -g pane-border-style fg=colour36
 set-option -g pane-active-border-style fg=colour35
-
+set-option -g default-command bash
 
 # Status Bar
 set -g status-justify centre
