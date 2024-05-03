@@ -34,7 +34,11 @@ docker_add_repo: true
 docker_repo_url: https://download.docker.com/linux
 
 # A list of users who will be added to the docker group
-docker_users: []
+docker_users:
+  - sandroroth
 
 # Docker daemon option as a dict
-docker_daemon_options: {}
+docker_daemon_options:
+  storage-dirver: "devicemapper"
+  log-opts:
+    max-size: "100m"
