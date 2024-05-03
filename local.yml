@@ -22,6 +22,13 @@
   roles:
     - base
 
+- hosts: all
+  tags: docker
+  becomr: true
+  roles:
+    - docker
+  when: docker is defined and docker == true
+
 - hosts: server
   tags: server
   become: true
