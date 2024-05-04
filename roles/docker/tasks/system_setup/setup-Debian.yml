@@ -26,6 +26,15 @@
     state: present
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('20.04', '>=')
 
+- name: system setup | docker | change iptables to legacy
+  tags: docker, iptables legacy, start docker
+  community.general.alternatives:
+    name: iptables
+    path: /usr/sbin/iptables-legacy
+    link: /etc/alternatives/iptables
+  notify: restart iptables
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version ('22.04')
+
 - name: system setup | docker | apt key
   ansible.builtin.get_url:
     url: "{{ docker_apt_gpg_key }}"
