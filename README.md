@@ -3,7 +3,7 @@ I use this to configure my workstation machine and my server for storage, video 
 
 That being said, the whole install will be covered in different roles which will be dicussed further down. However, the role all install have in common is the basic and docker role.
 
-## Basic role coverage
+### Basic role coverage
 Basic security configuration
 - Install software to monitor bas ssh access (fail2ban)
 - Configure SSH to be more secure (disabling root login, requiring key-based authentication, and allowing a custom SSH port to be set)
@@ -20,9 +20,9 @@ software settings
 - install devop packages
 - install package utilities (wget, rsync, neofetch etc.)
 
-### variables of this role
+#### variables of this role
 
-## Docker role coverage
+### Docker role coverage
 
 ## X role coverage
 
