@@ -3,10 +3,10 @@
 
 - block:
   #Setup system
-  import_tasks: system_setup/setup-Debian.yml
-  import_tasks: system_setup/docker-packages.yml
-  import_tasks: software/docker-compose-plugin.yml
-  import_tasks: system_setup/directory.yml
-  import_tasks: software/docker-compose.yml
-  import_tasks: system_setup/docker-users.yml
+  - import_tasks: system_setup/setup-Debian.yml
+  - import_tasks: system_setup/docker-packages.yml
+  - import_tasks: software/docker-compose-plugin.yml
+  - import_tasks: system_setup/directory.yml
+  - import_tasks: software/docker-compose.yml
+  - import_tasks: system_setup/docker-users.yml
 
