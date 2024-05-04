@@ -39,6 +39,5 @@ docker_users:
 
 # Docker daemon option as a dict
 docker_daemon_options:
-  storage-dirver: "devicemapper"
-  log-opts:
-    max-size: "100m"
+  api-cors-header: ""
+  authorization-plugins: []
