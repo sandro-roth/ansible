@@ -1,4 +1,4 @@
-# Ansible provision
+# Ansible provision (ongoing work)
 I use this to configure my workstation machine and my server for storage, video streaming etc. This play is configured to use in Ansible-playbook method. Therefore it needs a host machine running this command from. In order to properly function this ansible-playbook needs either a fresh install of Ubuntu or ArchLinux.
 
 That being said, the whole install will be covered in different roles which will be dicussed further down. However, the role all install have in common is the basic and docker role.
