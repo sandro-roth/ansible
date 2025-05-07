@@ -1,7 +1,7 @@
 # Main user (will be added to docker)
 main_user: sandro
 
-# 
+#
 
 # ssh default settings
 security_ssh_port: 1630
