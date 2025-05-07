@@ -16,6 +16,12 @@
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
 # run roles
+- hosts: tower
+  tags: encryption
+  become: true
+  roles:
+    - encryption
+
 - hosts: all
   tags: base
   become: true
