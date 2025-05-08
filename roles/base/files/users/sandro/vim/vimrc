@@ -27,7 +27,7 @@ silent! map <F2> :NERDTreeToggle<CR>
 silent! map <F3> :NERDTreeFind<CR>
 
 " Switch buffers using F4
-nnoremap <F4> :buffers<CR>:buffer<Space>
+noremap <F4> :buffers<CR>:buffer<Space>
 
 " Refresh vim config with F5
 noremap <silent> <F5> :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
