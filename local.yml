@@ -26,8 +26,8 @@
   tags: base
   become: true
   roles:
-    # - base
-    - docker
+    - base
+   # - docker
 
 - hosts: server
   tags: server
