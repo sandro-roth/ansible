@@ -6,4 +6,4 @@
       - "{{ python_package }}"
       - "{{ python_pip_package }}"
       - "{{ python_virtualenv_package }}"
-      - "{{ python-setuptools }}"
+      - "{{ python_setuptools }}"
