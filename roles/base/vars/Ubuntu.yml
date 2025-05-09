@@ -11,6 +11,7 @@ python_package: python3
 python_pip_package: python3-pip
 python_psutil_package: python3-psutil
 python_virtualenv_package: python3-virtualenv
+python-setuptools: python3-setuptools
 rename_package: rename
 ruby_rake_package: rake
 sftp_path: /usr/lib/openssh/sftp-server
