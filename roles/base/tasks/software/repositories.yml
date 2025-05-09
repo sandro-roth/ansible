@@ -1,4 +1,4 @@
-- name: system setup | repositories | add ignored packages for archlinux hosts
+- name: software | repositories | add ignored packages for archlinux hosts
   tags: packages,repositories
   lineinfile:
       dest: /etc/pacman.conf
@@ -6,7 +6,7 @@
       line: "IgnorePkg   = ansible linux linux-headers linux-lts linux-lts-headers"
   when: ansible_distribution == "Archlinux"
 
-- name: system setup | repositories | install package management tools (debian-based)
+- name: software | repositories | install package management tools (debian-based)
   tags: packages,system,settings
   package:
     name:
