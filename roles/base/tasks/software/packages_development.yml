@@ -1,4 +1,4 @@
-- name: system setup | development packages | install packages
+- name: software | development packages | install packages
   tags: dev, development, packages, python
   package:
     name:
@@ -6,4 +6,4 @@
       - "{{ python_package }}"
       - "{{ python_pip_package }}"
       - "{{ python_virtualenv_package }}"
-      - python-setuptools
+      - "{{ python-setuptools }}"
