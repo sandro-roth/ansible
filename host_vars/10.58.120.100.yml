@@ -4,7 +4,7 @@ branch: master
 ansible_cron_minute: "40"
 
 # platform-specific
-microcode_amd_install: false
+microcode_amd_install: true
 microcode_intel_install: false
 
 
