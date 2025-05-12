@@ -24,6 +24,12 @@
     - base
    # - docker
 
+- hosts: tower
+  tags: ricing
+  become: true
+  roles:
+    # - custom
+
 - hosts: server
   tags: server
   become: true
