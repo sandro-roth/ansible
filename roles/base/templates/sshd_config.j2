@@ -20,7 +20,6 @@ GSSAPIAuthentication {{ security_ssh_gss_api_authentification | default("no") }}
 X11Forwarding {{ security_ssh_x11_forwarding | default("no") }}
 
 # Security
-HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 HostKey /etc/ssh/ssh_host_rsa_key
