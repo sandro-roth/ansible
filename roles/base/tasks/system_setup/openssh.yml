@@ -24,7 +24,7 @@
 
 - name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }}
   tags: openssh, ssh, system, settings
-  shell: "ss -tuln | grep: {{ security_ssh_port }}"
+  shell: "ss -tuln | grep {{ security_ssh_port }}"
   register: ssh_port_check
   failed_when: ssh_port_check.stdout == ""
   changed_when: false
