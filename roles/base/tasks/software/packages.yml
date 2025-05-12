@@ -1,7 +1,7 @@
 - name: system setup | pip packages | install bpytop
   tags: bpytop,packages,pip,python
-  become_user: sandro
-  apt:
-    executable: /usr/bin/pip3
-    state: latest
+  become: true
+  package:
     name: bpytop
+    state: present
+    update_cache: true
