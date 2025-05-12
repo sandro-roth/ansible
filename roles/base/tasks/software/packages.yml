@@ -1,7 +1,13 @@
-- name: system setup | pip packages | install bpytop
-  tags: bpytop,packages,pip,python
-  become: true
+- name: system setup | packages | install bpytop
+  tags: bpytop,packages,python
   package:
     name: bpytop
+    state: present
+    update_cache: true
+
+- name: system setup | packages | install fwupd
+  tags: fwupd, packages
+  package:
+    name: fwupd
     state: present
     update_cache: true
