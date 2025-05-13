@@ -28,7 +28,7 @@
   tags: ricing
   become: true
   roles:
-    # - custom
+    - customize_tower
 
 - hosts: server
   tags: server
