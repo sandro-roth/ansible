@@ -6,6 +6,7 @@
       - qtbase5-dev
       - libusb-1.0-0-dev
       - qttools5-dev-tools
+      - libmbedcrypto3
     state: present
 
 - name: corsair | download OpenRGB .deb package
