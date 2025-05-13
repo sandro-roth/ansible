@@ -1,7 +1,11 @@
 - name: corsair | install packages
   tags: corsair
   apt:
-    name: gdebi-core
+    name:
+      - gdebi-core
+      - gtbase5-dev
+      - libusb-1.0-0-dev
+      - qttools5-dev-tools
     state: present
 
 - name: corsair | download OpenRGB .deb package
