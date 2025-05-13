@@ -3,7 +3,7 @@
   apt:
     name:
       - gdebi-core
-      - gtbase5-dev
+      - qtbase5-dev
       - libusb-1.0-0-dev
       - qttools5-dev-tools
     state: present
