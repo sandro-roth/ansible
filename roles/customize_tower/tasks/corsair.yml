@@ -7,7 +7,7 @@
 - name: corsair | download OpenRGB .deb package
   tags: corsair
   get_url:
-    url: https://openrgb.org/releases/release_0.9/OpenRGB_0.9_amd64.deb
+    url: https://openrgb.org/releases/release_0.9/openrgb_0.9_amd64_bullseye_b5f46e3.deb
     dest: /tmp/OpenRGB_0.9_amd64.deb
 
 - name: corsair | install OpenRGB deb package
