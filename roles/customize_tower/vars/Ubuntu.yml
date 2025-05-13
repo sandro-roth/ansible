@@ -1,2 +1,8 @@
 device_id: 0
-rgb_color: '#00FFFF'
+led_color_0: '#00FFFF'
+led_color_1: '#FF7F00'
+led_color_2: '#FFFF00'
+led_color_3: '#00FF00'
+led_color_4: '#0000FF'
+led_color_5: '#4B0082'
+led_color_6: '#8F00FF'

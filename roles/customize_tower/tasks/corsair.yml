@@ -25,4 +25,11 @@
     mode: 0755
   vars:
     device_id: "{{ device_id }}"
-    color: "{{ rgb_color }}"
+    led_colors:
+      0: "{{ led_col_0 }}"
+      1: "{{ led_col_1 }}"
+      2: "{{ led_col_2 }}"
+      3: "{{ led_col_3 }}"
+      4: "{{ led_col_4 }}"
+      5: "{{ led_col_5 }}"
+      6: "{{ led_col_6 }}"
