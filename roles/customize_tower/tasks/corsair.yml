@@ -3,7 +3,6 @@
   apt:
     name: gdebi-core
     state: present
-  when: ansible_distribution == "Ubuntu"
 
 - name: corsair | download OpenRGB .deb package
   tags: corsair
@@ -15,4 +14,15 @@
   tags: corsair
   apt:
     deb: /tmp/OpenRGB_0.9_amd64.deb
-  when: ansible_distribution == "Ubuntu"
+
+- name: corsair | deploy RGB color script for Commander PRO
+  tags: corsair
+  template:
+    src: set_rgb_color.j2
+    dest: /usr/local/bin/set_rgb_color.sh
+    owner: root
+    group: root
+    mode: 0755
+  vars:
+    device_id: "{{ device_id }}"
+    color: "{{ rgb_color }}"
