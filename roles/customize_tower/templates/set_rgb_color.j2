@@ -2,5 +2,11 @@
 
 # Set RGB colof for Corsair Commander Pro using OpenRGB
 
-# Values set, variables set in tasks/corsair.yml
-/usr/bin/OpenRGB --device {{ device_id }} --color {{ color }}
+# Set individual LED colors for Commander PRO
+
+DEVICE_ID = {{ device_id }}
+
+{% for led_index, led_color in led_colors.items() %}
+echo "Setting LED {{ led_index }} to {{ led_color }}"
+/usr/bin/OpenRGB --device $DEVICE_ID --led {{ led_index }} {{ led_color }}
+{% endfor %}
