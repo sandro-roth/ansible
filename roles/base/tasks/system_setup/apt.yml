@@ -1,11 +1,13 @@
 - name: system setup | apt | fix APT sources for Ubuntu 24.04 (noble)
+  tags: apt
   copy:
-    src: corsair/apt_source_list
+    src: apt/apt_source_list
     dest: /etc/apt/sources.list
     owner: root
     group: root
     mode: 0644
 
 - name: system setup | apt | update APT package index
+  tags: apt
   apt:
     update_cache: yes
