@@ -110,6 +110,17 @@
     group: root
     mode: 0755
 
+- name: corsair | run OpenRGB server in background temporarily
+  tags: corsair
+  shell: nohup /opt/OpenRGB/openrgb --server > /tmp/openrgb.log 2>&1 &
+  async: 5
+  poll: 0
+
+- name: corsair | wait a few seconds for OpenRGB to be ready
+  tags: corsair
+  pause:
+    seconds: 3
+
 - name: corsair | run color setting bash
   tags: corsair
   command: /usr/local/bin/set_rgb_color.sh
