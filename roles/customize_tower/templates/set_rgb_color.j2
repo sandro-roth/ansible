@@ -2,9 +2,12 @@
 
 # Set individual LED colors for Commander PRO
 DEVICE_ID="{{ device_id }}"
+ZONE_ID="{{ zone_id | default('0') }}"
 
-echo "Setting LED colors on device $DEVICE_ID"
+# Format LED colors into comma-separated hex (without #)
+COLORS="{% for _, led_color in led_colors.items() %}{{ led_color.lstrip('#') }}{% if not loop.last %},{% endif %}{% endfor %}"
 
-COLORS="{% for led_index, led_color in led_colors.items() %}{{ led_color }}{% if not loop.last %},{% endif %}{% endfor %}"
+echo "Setting static colors on Commander Pro - Device: $DEVICE_ID, Zone: $ZONE_ID"
+echo "Colors: $COLORS"
 
-/opt/OpenRGB/openrgb -d $DEVICE_ID -m static -c $COLORS
+/opt/OpenRGB/openrgb -d "$DEVICE_ID" -z "$ZONE_ID" -m static -c "$COLORS"
