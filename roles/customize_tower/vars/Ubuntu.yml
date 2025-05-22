@@ -1,5 +1,6 @@
 # Settings for Commander Pro
-device_id: 3
+device_id: 0
+zone_id: 0
 led_col_0: '00FFFF'
 led_col_1: 'FF7F00'
 led_col_2: 'FFFF00'
@@ -7,3 +8,12 @@ led_col_3: '00FF00'
 led_col_4: '0000FF'
 led_col_5: '4B0082'
 led_col_6: '8F00FF'
+
+led_colors:
+  0: "{{ led_col_0 }}"
+  1: "{{ led_col_1 }}"
+  2: "{{ led_col_2 }}"
+  3: "{{ led_col_3 }}"
+  4: "{{ led_col_4 }}"
+  5: "{{ led_col_5 }}"
+  6: "{{ led_col_6 }}"
