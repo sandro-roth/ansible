@@ -2,23 +2,34 @@
   tags: corsair
   apt:
     name:
-      - gdebi-core
       - qtbase5-dev
       - libusb-1.0-0-dev
       - qttools5-dev-tools
-      - libmbedcrypto3
+      - pkg-config
+      - libhidapi-dev
+      - libmbedtls-dev
     state: present
 
-- name: corsair | download OpenRGB .deb package
+- name: corsair | clone OpenRGB source code from Gitlab
   tags: corsair
-  get_url:
-    url: https://openrgb.org/releases/release_0.9/openrgb_0.9_amd64_bullseye_b5f46e3.deb
-    dest: /tmp/OpenRGB_0.9_amd64.deb
+  git:
+    repo: https://gitlab.com/CalcProgrammer1/OpenRGB.git
+    dest: /opt/OpenRGB
+    version: master
 
-- name: corsair | install OpenRGB deb package
+- name: corsair | run qmake to generate Makefile
   tags: corsair
-  apt:
-    deb: /tmp/OpenRGB_0.9_amd64.deb
+  become: true
+  command: qmake OpenRGB.pro
+  args:
+    chdir: /opt/OpenRGB
+
+- name: corsair | build OpenRGB from source
+  tags: corsair
+  become: true
+  command: make -j"{{ ansible_processor_cores | default(4) }}"
+  args:
+    chdir: /opt/OpenRGB
 
 - name: corsair | deploy RGB color script for Commander PRO
   tags: corsair
@@ -38,3 +49,7 @@
       4: "{{ led_col_4 }}"
       5: "{{ led_col_5 }}"
       6: "{{ led_col_6 }}"
+
+- name: corsair | run color setting bash
+  tags: corsair
+  command: /usr/local/bin/set_rgb_color.sh
