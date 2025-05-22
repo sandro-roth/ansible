@@ -1,0 +1,4 @@
+- name: reboot group change
+  reboot:
+    msg: "User was added to group. Rebooting to apply group membership"
+    reboot_timeout: 300
