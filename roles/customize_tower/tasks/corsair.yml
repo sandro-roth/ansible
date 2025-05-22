@@ -85,7 +85,7 @@
   user:
     name: "{{ security_ssh_allowed_users }}"
     groups: plugdev
-    appned: yes
+    append: yes
   notify: reboot group change
 
 - name: corsair | install OpenRGB udev rules
