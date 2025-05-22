@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# Set RGB colof for Corsair Commander Pro using OpenRGB
-
 # Set individual LED colors for Commander PRO
 
-DEVICE_ID = {{ device_id }}
+DEVICE_ID="{{ device_id }}"
 
 {% for led_index, led_color in led_colors.items() %}
 echo "Setting LED {{ led_index }} to {{ led_color }}"
-/usr/bin/OpenRGB --device $DEVICE_ID --led {{ led_index }} {{ led_color }}
+/opt/OpenRGB/openrgb --device $DEVICE_ID --led {{ led_index }} {{ led_color }}
 {% endfor %}
