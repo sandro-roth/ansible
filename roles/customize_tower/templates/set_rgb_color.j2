@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Set individual LED colors for Commander PRO
-
 DEVICE_ID="{{ device_id }}"
 
-{% for led_index, led_color in led_colors.items() %}
-echo "Setting LED {{ led_index }} to {{ led_color }}"
-/opt/OpenRGB/openrgb --device $DEVICE_ID --led {{ led_index }} {{ led_color }}
-{% endfor %}
+echo "Setting LED colors on device $DEVICE_ID"
+
+COLORS="{% for led_index, led_color in led_colors.items() %}{{ led_color }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+/opt/OpenRGB/openrgb -d $DEVICE_ID -c $COLOR
