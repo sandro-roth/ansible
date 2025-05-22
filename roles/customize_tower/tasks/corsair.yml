@@ -10,26 +10,96 @@
       - libmbedtls-dev
     state: present
 
+- name: corsair | mark OpenRGB repo as system-safe
+  tags: corsair
+  ini_file:
+    path: /etc/gitconfig
+    section: safe
+    option: directory
+    value: /opt/OpenRGB
+    state: present
+    backup: yes
+
+- name: corsair | create /opt if not exist
+  tags: corsair
+  become: true
+  file:
+    path: /opt
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: corsair | create /opt/OpenRGB if not exist
+  tags: corsair
+  become: true
+  file:
+    path: /opt/OpenRGB
+    state: directory
+    owner: "{{ security_ssh_allowed_users }}"
+    group: "{{ security_ssh_allowed_users }}"
+    mode: 0755
+
+- name: corsair | check if OpenRGB binary exists
+  tags: corsair
+  stat:
+    path: /opt/OpenRGB/openrgb
+  register: openrgb_binary
+
 - name: corsair | clone OpenRGB source code from Gitlab
   tags: corsair
+  become: false
   git:
     repo: https://gitlab.com/CalcProgrammer1/OpenRGB.git
     dest: /opt/OpenRGB
     version: master
+    force: yes
+  when: not openrgb_binary.stat.exists
+
+- name: corsair | clean OpenRGB build
+  tags: corsair
+  become: false
+  command: make clean
+  args:
+    chdir: /opt/OpenRGB
+  ignore_errors: true
+  when: not openrgb_binary.stat.exists
 
 - name: corsair | run qmake to generate Makefile
   tags: corsair
-  become: true
+  become: false
   command: qmake OpenRGB.pro
   args:
     chdir: /opt/OpenRGB
+  when: not openrgb_binary.stat.exists
 
 - name: corsair | build OpenRGB from source
   tags: corsair
-  become: true
   command: make -j"{{ ansible_processor_cores | default(4) }}"
   args:
     chdir: /opt/OpenRGB
+  when: not openrgb_binary.stat.exists
+
+- name: corsair | add user to plugdev group
+  tags: corsair
+  user:
+    name: "{{ security_ssh_allowed_users }}"
+    groups: plugdev
+    appned: yes
+  notify: reboot group change
+
+- name: corsair | install OpenRGB udev rules
+  tags: corsair
+  copy:
+    src: 60-openrgb.rules
+    dest: /etc/udev/rules.d/60-openrgb.rules
+    owner: root
+    group: root
+    mode: 0644
+
+- name: corsair | reload udev rules
+  tags: corsair
+  shell: udevadm control --reload-rules && udevadm trigger
 
 - name: corsair | deploy RGB color script for Commander PRO
   tags: corsair
