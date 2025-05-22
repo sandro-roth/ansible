@@ -7,4 +7,4 @@ echo "Setting LED colors on device $DEVICE_ID"
 
 COLORS="{% for led_index, led_color in led_colors.items() %}{{ led_color }}{% if not loop.last %},{% endif %}{% endfor %}"
 
-/opt/OpenRGB/openrgb -d $DEVICE_ID -c $COLOR
+/opt/OpenRGB/openrgb -d $DEVICE_ID -m static -c $COLORS
