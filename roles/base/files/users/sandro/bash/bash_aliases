@@ -7,9 +7,6 @@ alias c='clear'
 alias cd..='cd ..'
 alias cp='cp -iv'
 alias chmod="chmod -c"
-alias df='df -h -x squashfs -x tmpfs -x devtmpfs'
-alias diff='colordiff'
-alias egrep='egrep --colour=auto'
 alias e="vim -O "
 alias E="vim -o "
 alias extip='curl icanhazip.com'
