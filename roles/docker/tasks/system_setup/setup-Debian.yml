@@ -4,6 +4,10 @@
       - docker
       - docker.io
       - docker-engine
+      - docker-compose-v2
+      - docker-compose
+      - docker-doc
+      - podman-docker
     state: absent
 
 - name: system setup | docker | install dependencies
