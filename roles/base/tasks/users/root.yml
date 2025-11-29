@@ -2,6 +2,7 @@
   user:
     name: root
     password_lock: yes
+  when: ansible_os_family != 'Darwin'
 
 - name: users | root | create config directories
   file:
@@ -14,3 +15,4 @@
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
   tags: dotfiles
+  when: ansible_os_family != 'Darwin'
