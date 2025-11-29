@@ -1,0 +1,28 @@
+# Pakete, die auf macOS keinen Sinn haben, bewusst leer lassen
+amd_microcode_package:""
+intel_microcode_package:""
+lm_sensor_package:""
+nfs_client_package:""
+dconf_package:""
+cron_package:""
+dns_utils_package:""
+
+# SSH
+openssh_package: openssh
+openssh_service: ssh
+
+#Python Umfeld
+python_package: python3
+python_pip_package: pip3
+python_psutil_package: psutil
+python_virtualenv_package: virtualenv
+python_setuptools: setuptools
+
+# Diverses
+rename_package: rename
+ruby_rake_package: rake
+vim_package: vim
+
+# Paths and Groups
+sftp_path: /usr/libexec/sftp-server
+sudo_group: admin
