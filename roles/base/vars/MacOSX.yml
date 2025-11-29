@@ -26,3 +26,5 @@ vim_package: vim
 # Paths and Groups
 sftp_path: /usr/libexec/sftp-server
 sudo_group: admin
+usr_home: /Users/sandro
+usr_extra_groups: "{{ sudo_group }}"

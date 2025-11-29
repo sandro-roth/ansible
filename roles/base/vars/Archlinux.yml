@@ -17,3 +17,5 @@ rename_package: perl-rename
 sftp_path: /usr/lib/ssh/sftp-server
 sudo_group: wheel
 vim_package: gvim
+usr_home: /home/sandro
+usr_extra_groups: "adm, {{ sudo_group }}"
