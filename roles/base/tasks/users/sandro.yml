@@ -9,11 +9,13 @@
   user:
     name: sandro
     group: sandro
-    groups: adm, {{ sudo_group }}
+    groups: {{ usr_extra_groups }}
     state: present
     comment: "Sandro main"
     password: "{{ sandro_passwd }}"
-    shell: /bin/bash
+    shell: /bin/zsh
+    home: "{{ usr_home }}"
+    create_home: yes
 
 - name: users | sandro | add sudoers file
   tags: sandro, settings, simone, sudo, system, users
@@ -33,7 +35,7 @@
     group: sandro
     mode: 0700
   with_items:
-    - { dir: '/home/sandro/.ssh' }
+    - { dir: '{{ usr_home }}/.ssh' }
 
 - name: users | sandro | add public key
   tags: dotfiles, sandro, ssh, ssh-keys, users
@@ -46,7 +48,7 @@
 - name: users | sandro | create config directories
   tags: dotfiles, sandro, tmux, users, vim, zsh
   file:
-    path: /home/sandro/{{ item.dir }}
+    path: {{ usr_home }}/{{ item.dir }}
     state: directory
     owner: sandro
     group: sandro
@@ -70,7 +72,7 @@
   tags: dotfiles, users, sandro, tmux
   copy:
     src: users/sandro/tmux/tmux.conf.server
-    dest: /home/sandro/.tmux.conf
+    dest: {{ usr_home }}/.tmux.conf
     owner: sandro
     group: sandro
     mode: 0600
@@ -81,7 +83,7 @@
   tags: dotfiles, users, sandro, tmux
   copy:
     src: users/sandro/tmux/tmux.conf.workstation
-    dest: /home/sandro/.tmux.conf
+    dest: {{ usr_home }}/.tmux.conf
     owner: sandro
     group: sandro
     mode: 0600
@@ -91,7 +93,7 @@
   tags: dotfiles,users,sandro,tmux,users,vim,zsh
   copy:
     src: users/sandro/{{ item.src }}
-    dest: /home/sandro/{{ item.dest }}
+    dest: {{ usr_home }}/{{ item.dest }}
     owner: sandro
     group: sandro
     mode: 0600
@@ -113,7 +115,7 @@
   tags: dotfiles,sandro,users,zsh
   copy:
     src: users/sandro/zsh/{{ item.src }}
-    dest: /home/sandro/.zsh/{{ item.src }}
+    dest: {{ usr_home }}/.zsh/{{ item.src }}
     owner: sandro
     group: sandro
     mode: 0600
@@ -134,7 +136,7 @@
   tags: dotfiles,sandro,users,vim
   copy:
     src: users/sandro/vim/{{ item.src }}
-    dest: /home/sandro/.vim/ftplugin/{{ item.src }}
+    dest: {{ usr_home }}/.vim/ftplugin/{{ item.src }}
     owner: sandro
     group: sandro
     mode: 0600
@@ -148,7 +150,7 @@
   tags: dotfiles,sandro,users,vim
   copy:
     src: users/sandro/vim/{{ item.src }}
-    dest: /home/sandro/.vim/colors/{{ item.src }}
+    dest: {{ usr_home }}/.vim/colors/{{ item.src }}
     owner: sandro
     group: sandro
     mode: 0600
@@ -168,4 +170,4 @@
     group: sandro
     mode: 0700
   with_items:
-    - { src: 'pathogen.vim', dest: '/home/sandro/.vim/autoload/pathogen.vim' }
+    - { src: 'pathogen.vim', dest: '{{ usr_home }}/.vim/autoload/pathogen.vim' }
