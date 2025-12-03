@@ -32,6 +32,7 @@
   - import_tasks: system_setup/locale.yml
   - import_tasks: system_setup/logging.yml
   - import_tasks: system_setup/memory.yml
+    when: ansible_system == "Linux"
   - import_tasks: system_setup/microcode.yml
   - import_tasks: system_setup/openssh.yml
   - import_tasks: system_setup/firmware.yml
