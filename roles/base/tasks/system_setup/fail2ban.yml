@@ -3,7 +3,9 @@
   package:
     name: fail2ban
     state: present
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - security_fail2ban_enabled | bool
 
 - name: system setup | fail2ban | Copy jail custom config file into place
   tags: system, setup, fail2ban, jailcustom
@@ -13,6 +15,9 @@
     owner: root
     group: root
     mode: 0644
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - security_fail2ban_enables | bool
   notify:
     - reload fail2ban
 
@@ -27,6 +32,7 @@
   when:
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version | int >= 12
+    - security_fail2ban_enabled | bool
   notify:
     - reload fail2ban
 
@@ -36,3 +42,6 @@
     name: fail2ban
     state: started
     enabled: true
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - security_fail2ban_enabled | bool
