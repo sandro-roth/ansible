@@ -10,6 +10,7 @@
   # Install software
   - import_tasks: software/repositories.yml
   - import_tasks: software/homebrew.yml
+    when: ansible_os_family == "Darwin"
   - import_tasks: software/packages_development.yml
   - import_tasks: software/packages_git.yml
   - import_tasks: software/packages_cleanup.yml
