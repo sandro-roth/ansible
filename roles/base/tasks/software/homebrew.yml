@@ -1,0 +1,16 @@
+- name: software | homebrew | check if homebrew is installed
+  stat:
+    path: /opt/homebrew/bin/brew
+  register: brew_stat
+
+- name: software | homebrew | install homebrew
+  shel: |
+    /bin/bash -c "$(curl -fsSl https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  args:
+    creates: /opt/homebrew/bin/brew
+  when: not brew_stat.stat.exists
+
+- name: software | homebrew | ensure PATH includes brew
+  set_fact:
+    brew_path: /opt/homebrew/bin
+  when: brew_stat.stat.exists
