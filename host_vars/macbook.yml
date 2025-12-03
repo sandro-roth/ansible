@@ -1,0 +1,15 @@
+---
+branch: main
+
+ansible_user: sandro
+ansible_python_interpreter: /usr/bin/python3
+
+# User
+usr_home: /Users/sandro
+usr_extra_groups: "{{ sudo_group }}"
+
+# Plattform-spezifisches Verhalten
+microcode_amd_install: false
+microcode_intel_install: false
+security_autoupdate_enabled: false
+sercurity_fail2ban_enabled: false
