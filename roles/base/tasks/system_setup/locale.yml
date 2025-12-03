@@ -3,6 +3,7 @@
   locale_gen:
     name: de_CH.UTF-8
     state: present
+  when: ansible_os_family != "Darwin"
 
 - name: system setup | locale | set locale to de_CH
   tags: locale, system, setup
@@ -10,8 +11,38 @@
     name: de_CH.UTF-8
     state: present
   register: locale
+  when: ansible_os_family != "Darwin"
 
 - name: sytem setup | locale | set de_CH as default locale
   tags: locale, system, setup
   command: localectl set-locale LANG=de_CH.UTF-8
-  when: locale.changed
+  when:
+    - ansible_os_family != "Darwin"
+    - locale.changed
+
+- name: system setup | locale | set LANG systemwide on macOS
+  tags: locale, system, setup
+  lineinfile:
+    path: /etc/zprofile
+    line: 'export LANG=de_CH.UTF-8'
+    create: yes
+  when: ansible_os_family == "Darwin"
+
+- name: system setup | locale | set LC_ALL systemwide on macOS
+  tags: locale, system, setup
+  lineinfile:
+    path: /etc/zprofile
+    line: 'export LC_ALL=de_CH.UTF-8'
+  when: ansible_os_family == "Darwin"
+
+- name: system setup | locale | set LC_CTYPE systemwide on macOS
+  tags: locale, system, setup
+  lineinfile:
+    path: /etc/zprofile
+    line: 'export LC_CTYPE=de_CH.UTF-8'
+  when: ansible_os_family == "Darwin"
+
+- name: system setup | locale | apply language + region in macOS preferences
+  tags: locale, system, setup
+  command: defaults write NSGlobalDomain AppleLocale -string "de_CH"
+  when: ansible_os_family == "Darwin"
