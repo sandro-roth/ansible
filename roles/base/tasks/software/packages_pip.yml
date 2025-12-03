@@ -1,7 +1,10 @@
-- name: system setup | pip packages | install bpytop
-  tags: bpytop,packages,pip,python
-  become_user: sandro
+- name: pip install packages (Linux)
   pip:
-    executable: /usr/bin/pip3
-    state: latest
-    name: bpytop
+    name: "{{ pip_packages }}"
+  when: ansible_os_family != "Darwin"
+
+- name: pip install packages (macOS)
+  pip:
+    name: "{{ pip_packages }}"
+    executable: /opt/homebrew/bin/pip3
+  when: ansible_os_family == "Darwin"
