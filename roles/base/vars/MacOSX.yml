@@ -1,11 +1,11 @@
 # Pakete, die auf macOS keinen Sinn haben, bewusst leer lassen
-amd_microcode_package:""
-intel_microcode_package:""
-lm_sensor_package:""
-nfs_client_package:""
-dconf_package:""
-cron_package:""
-dns_utils_package:""
+amd_microcode_package: ""
+intel_microcode_package: ""
+lm_sensor_package: ""
+nfs_client_package: ""
+dconf_package: ""
+cron_package: ""
+dns_utils_package: ""
 
 # SSH
 openssh_package: openssh
