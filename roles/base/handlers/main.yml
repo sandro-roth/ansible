@@ -10,7 +10,7 @@
     state: restarted
   when: ansible_os_family != "Darwin"
 
-- name: reload fail2ban
+- name: reload_fail2ban
   service:
     name: fail2ban
     state: reloaded
