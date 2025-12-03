@@ -1,4 +1,4 @@
-- name: system setup | utilities | install utilities packages
+- name: system setup | utilities | install utilities packages (Linux)
   tags: packages, system, settings
   package:
     state: latest
@@ -28,6 +28,31 @@
       - wget
       - whois
       - zsh
+  when: ansible_os_family != "Darwin"
+
+- name: system setup | utilities | install utilities packages (macOS)
+  tags: packages, system, settings
+  community.general.homebrew:
+    state: present
+    name:
+      - curl
+      - htop
+      - lsof
+      - mc
+      - mosh
+      - ncdu
+      - neofetch
+      - nmap
+      - ranger
+      - rename
+      - rsync
+      - tmux
+      - traceroute
+      - vim
+      - wget
+      - whois
+      - zsh
+  when: ansible_os_family == "Darwin"
 
 - name: system setup | utilities | install man-pages (arch)
   tags: packages,system,settings
