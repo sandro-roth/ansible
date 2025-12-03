@@ -11,8 +11,15 @@
     name: systemd-timesyncd
     state: started
     enabled: true
+  when: ansible_distribution == "Ubuntu"
 
 - name: system setup | clock | set time zone
   tags: ntp, timezone, system setup
   timezone:
     name: "Europe/Zurich"
+  when: ansible_os_family != "Darwin"
+
+- name: system setup | clock | set time zone (macOS)
+  tags: ntp, timezone, system setup
+  command: systemsetup -settimezone "Europe/Zurich"
+  when: ansible_os_family == "Darwin"
