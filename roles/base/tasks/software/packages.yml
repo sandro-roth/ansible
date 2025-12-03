@@ -1,9 +1,17 @@
-- name: system setup | packages | install bpytop
+- name: system setup | packages | install bpytop (Linux)
   tags: bpytop,packages,python
   package:
     name: bpytop
     state: present
     update_cache: true
+  when: ansible_os_family != "Darwin"
+
+- name: system setup | packages | install bpytop MacOS
+  tags: bpytop, packages, python
+  community.general.homebrew:
+    name: bpytop
+    state: present
+  when: ansible_os_family == "Darwin"
 
 - name: system setup | packages | install fwupd
   tags: fwupd, packages
@@ -11,3 +19,4 @@
     name: fwupd
     state: present
     update_cache: true
+  when: ansible_os_family != "Darwin"
