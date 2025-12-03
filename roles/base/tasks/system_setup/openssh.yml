@@ -1,9 +1,19 @@
-- name: system setup | openssh | install or update daemon package
+- name: system setup | openssh | install or update daemon package (non macOS)
   tags: openssh, ssh, system, settings
   package:
     name: "{{ openssh_package }}"
     state: latest
   notify: restart_sshd
+  when: ansible_os_family != "Darwin"
+
+- name: system setup | openssh | install or update daemon package via Homebrew
+  tags: openssh, ssh, system, settings
+  shell: >
+    {{ brew_path | default('/opt/homebrew/bin') }}/brew install openssh
+    || {{ brew_path | default('/opt/homebrew/bin') }}/brew upgrade openssh
+  args:
+    warn: false
+  when: ansible_os_family == "Darwin"
 
 - name: system setup | openssh | enable daemon
   tags: openssh, ssh, system, settings
@@ -22,9 +32,18 @@
     mode: 0644
   notify: restart_sshd
 
-- name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }}
+- name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }} (Linux)
   tags: openssh, ssh, system, settings
-  shell: "ss -tuln | grep {{ security_ssh_port }}"
+  shell: "ss -tuln | grep ':{{ security_ssh_port }}'"
   register: ssh_port_check
   failed_when: ssh_port_check.stdout == ""
   changed_when: false
+  when: ansible_os_family != "Darwin"
+
+- name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }} (macOS)
+  tags: openssh, ssh, system, settings
+  shell: "netstat -an | grep '.{{ security_ssh_port }} '"
+  register: ssh_port_check_macos
+  failed_when: ssh_port_check_macos.stdout == ""
+  changed_when: false
+  when: ansible_os_family == "Darwin"
