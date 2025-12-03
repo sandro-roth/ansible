@@ -1,27 +1,31 @@
 ---
 - name: apt_update
-  apt: update_cache=yes
+  apt:
+    update_cache=yes
+  when: ansible_os_family == "Debian"
 
 - name: restart_sshd
   service:
     name: "{{ openssh_service }}"
     state: restarted
+  when: ansible_os_family != "Darwin"
 
 - name: reload fail2ban
   service:
     name: fail2ban
     state: reloaded
+  when: ansible_os_family != "Darwin"
 
 - name: update_tmux_plugin_perms
   file:
-    path: /home/sandro/.tmux/plugins
+    path: "{{ usr_home }}/.tmux/plugins"
     owner: sandro
     group: sandro
     recurse: true
 
 - name: update_vim_bundle_perms
   file:
-    path: /home/sandro/.vim/bundle
+    path: "{{ usr_home }}/.vim/bundle"
     owner: sandro
     group: sandro
     recurse: true
