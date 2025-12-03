@@ -17,5 +17,5 @@ security_ssh_allowed_users: "sandro"
 security_sshd_state: started
 security_ssh_restart_handler_state: restarted
 
-sercurity_fail2ban_enabled: true
+security_fail2ban_enabled: true
 security_fail2ban_custom_configuration_template: "jail.local.j2"
