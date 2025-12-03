@@ -4,6 +4,10 @@
     name:
       - "{{ cron_package }}"
     state: latest
+  when:
+    - ansible_os_family != "Darwin"
+    - cron_package is defined
+    - cron_package | length > 0
 
 - name: system setup | cron | start and enable cronie daemon
   tags: cron
