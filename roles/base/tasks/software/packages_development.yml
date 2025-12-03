@@ -1,4 +1,4 @@
-- name: software | development packages | install packages
+- name: software | development packages | install packages (Linux)
   tags: dev, development, packages, python
   package:
     name:
@@ -7,3 +7,16 @@
       - "{{ python_pip_package }}"
       - "{{ python_virtualenv_package }}"
       - "{{ python_setuptools }}"
+  when: ansible_os_family != "Darwin"
+
+- name: software | development packages | install packages (macOS)
+  tags: dev, development, packages, python
+  community.general.homebrew:
+    name:
+      - git
+      - "{{ python_package }}"
+      - "{{ python_pip_package }}"
+      - "{{ python_virtualenv_package }}"
+      - "{{ python_setuptools }}"
+    state: present
+  when: ansible_os_family == "Darwin"
