@@ -4,7 +4,7 @@
   register: brew_stat
 
 - name: software | homebrew | install homebrew
-  shel: |
+  shell: |
     /bin/bash -c "$(curl -fsSl https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   args:
     creates: /opt/homebrew/bin/brew
