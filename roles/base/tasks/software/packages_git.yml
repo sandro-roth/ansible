@@ -2,7 +2,7 @@
   tags: dotfiles,sandro,users,tmux
   git:
     repo: https://github.com/srsudar/tmux-completion.git
-    dest: /home/sandro/.tmux/plugins/completion
+    dest: "{{ usr_home }}/.tmux/plugins/completion"
     force: yes
   notify: update_tmux_plugin_perms
 
@@ -10,7 +10,7 @@
   tags: dotfiles,sandro,users,tmux
   git:
     repo: https://github.com/tmux-plugins/tmux-continuum
-    dest: /home/sandro/.tmux/plugins/continuum
+    dest: "{{ usr_home }}/.tmux/plugins/continuum"
     force: yes
   notify: update_tmux_plugin_perms
 
@@ -18,7 +18,7 @@
   tags: dotfiles,sandro,users,tmux
   git:
     repo: https://github.com/tmux-plugins/tmux-resurrect
-    dest: /home/sandro/.tmux/plugins/resurrect
+    dest: "{{ usr_home }}/.tmux/plugins/resurrect"
     force: yes
   notify: update_tmux_plugin_perms
 
@@ -26,7 +26,7 @@
   tags: dotfiles, sandro, users, tmux
   git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: /home/sandro/.tmux/plugins/tpm
+    dest: "{{ usr_home }}/.tmux/plugins/tpm"
     force: yes
   notify: update_tmux_plugin_perms
 
@@ -38,12 +38,12 @@
     dest: "{{ item.dest }}"
     force: yes
   with_items:
-    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/sandro/.vim/bundle/ctrlp.vim' }
-    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/sandro/.vim/bundle/jedi-vim' }
-    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/sandro/.vim/bundle/ansible-vim' }
-    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/sandro/.vim/bundle/vim-grammarous' }
-    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/sandro/.vim/bundle/thesaurus_query' }
-    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/sandro/.vim/bundle/nerdtree' }
-    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/sandro/.vim/bundle/vim-obsession' }
-    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/sandro/.vim/bundle/syntastic' }
+    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '{{ usr_home }}/.vim/bundle/ctrlp.vim' }
+    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '{{ usr_home }}/.vim/bundle/jedi-vim' }
+    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '{{ usr_home }}/.vim/bundle/ansible-vim' }
+    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '{{ usr_home }}/.vim/bundle/vim-grammarous' }
+    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '{{ usr_home }}/.vim/bundle/thesaurus_query' }
+    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '{{ usr_home }}/.vim/bundle/nerdtree' }
+    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '{{ usr_home }}/.vim/bundle/vim-obsession' }
+    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '{{ usr_home }}/.vim/bundle/syntastic' }
   notify: update_vim_bundle_perms
