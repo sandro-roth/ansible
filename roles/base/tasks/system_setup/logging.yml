@@ -5,9 +5,12 @@
     regexp: "^#MaxFileSec="
     line: "MaxFileSec=5day"
   register: journald_config
+  when: ansible_service_mgr == "systemd"
 
 - name: system setup | logging | restart journald if config change
   service:
     name: systemd-journald
     state: restarted
-  when: journald_config.changed
+  when:
+    - ansible_service_mgr == "systemd"
+    - journald_config.changed
