@@ -19,7 +19,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - security_fail2ban_enables | bool
   notify:
-    - reload fail2ban
+    - reload_fail2ban
 
 - name: system setup | fail2ban | handle erros in Ubuntu setups
   tags: system, setup, fail2ban, Ubuntu setup
@@ -34,7 +34,7 @@
     - ansible_distribution_major_version | int >= 12
     - security_fail2ban_enabled | bool
   notify:
-    - reload fail2ban
+    - reload_fail2ban
 
 - name: system setup | fail2ban | Ensure fail2ban is enabled and running
   tags: system, setup, fail2ban, boot enabled
