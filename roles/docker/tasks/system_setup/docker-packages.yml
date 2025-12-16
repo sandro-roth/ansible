@@ -5,7 +5,9 @@
     state: "{{ docker_packages_state }}"
   notify: restart docker
   ignore_errors: "{{ ansible_check_mode }}"
-  when: "ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']"
+  when: >
+    ansible_system != 'Darwin'
+    and (ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']
 
 - name: system setup | docker packages | install downgrade option
   tags: docker, install, packages, downgrade
@@ -15,4 +17,7 @@
     allow_downgrade: true
   notify: restart docker
   ignore_errors: "{{ ansible_check_mode }}"
-  when: "ansible_version.full is version_compare('2.12', '>=') and ansible_os_family in ['RedHat', 'Debian']"
+  when: >
+    ansible_system != 'Darwin'
+    and ansible_version.full is version_compare('2.12', '>=')
+    and ansible_os_family in ['RedHat', 'Debian']

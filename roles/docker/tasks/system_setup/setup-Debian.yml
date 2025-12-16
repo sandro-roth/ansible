@@ -10,7 +10,7 @@
       - podman-docker
     state: absent
 
-- name: system setup | docker | install dependencies
+- name: system setup | docker | install dependencies
   apt:
     name:
       - apt-transport-https
@@ -37,7 +37,7 @@
     path: /usr/sbin/iptables-legacy
     link: /etc/alternatives/iptables
   notify: restart iptables
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version ('22.04')
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version ('22.04', '==')
 
 - name: system setup | docker | apt key
   ansible.builtin.get_url:
