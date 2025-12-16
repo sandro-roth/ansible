@@ -1,3 +1,5 @@
+---
+docker_os_key: Debian
 # Used only for Debian/Ubuntu. Switch 'stable' to 'nightly' if needed.
 docker_apt_release_channel: stable
 docker_apt_ansible_distribution: "{{ ansible_distribution }}"
