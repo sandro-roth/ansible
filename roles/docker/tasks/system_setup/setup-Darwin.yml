@@ -1,0 +1,5 @@
+---
+- name: system setup | docker | macOS install Docker Desktop
+  community.general.homebrew_cask:
+    name: "{{ docker_mac_cask }}"
+    state: present

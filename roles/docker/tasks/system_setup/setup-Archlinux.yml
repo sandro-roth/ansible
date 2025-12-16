@@ -1,0 +1,8 @@
+---
+- name: sysetm setup | docker | Archlinux install requirements
+  community.general.pacman:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+  changed_when: false
