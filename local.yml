@@ -22,13 +22,19 @@
   become: true
   roles:
     - base
-   # - docker
+    - docker
 
 - hosts: tower
   tags: ricing
   become: true
   roles:
     - customize_tower
+
+- hosts: mac
+  tags: macbook
+  become: true
+  roles:
+    - macbook
 
 - hosts: server
   tags: server
