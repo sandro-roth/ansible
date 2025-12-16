@@ -1,10 +1,4 @@
 ---
-- name: docker setup | docker compose standalone | guard
-  ansible.builtin.meta: end_play
-  when:
-    - not (docker_install_compose | bool)
-    - ansible_system == 'Darwin'
-
 - name: docker setup | Check current docker-compose version.
   tags: docker, docker-compose, check version
   command: "{{ docker_compose_path }} --version"
