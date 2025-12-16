@@ -12,7 +12,7 @@
 
 - name: docker | run OS specific setup
   block:
-    - import_tasks: "system_setup/setup-{{ docker_os_key }}.yml"
+    - include_tasks: "system_setup/setup-{{ docker_os_key }}.yml"
 
     - import_tasks: system_setup/docker-packages.yml
     - import_tasks: software/docker-compose-plugin.yml
