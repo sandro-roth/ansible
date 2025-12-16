@@ -1,5 +1,14 @@
-- include_vars: "{{ ansible_distribution }}.yml"
+---
+- name: docker | load vars for this OS
   tags: always
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_system }}.yml"
+      paths:
+        - "{{ role_path}}/vars"
 
 - block:
   #Setup system
