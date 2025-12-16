@@ -8,14 +8,15 @@
         - "{{ ansible_os_family }}.yml"
         - "{{ ansible_system }}.yml"
       paths:
-        - "{{ role_path}}/vars"
+        - "{{ role_path }}/vars"
 
-- block:
-  #Setup system
-  - import_tasks: system_setup/setup-Debian.yml
-  - import_tasks: system_setup/docker-packages.yml
-  - import_tasks: software/docker-compose-plugin.yml
-  - import_tasks: system_setup/directory.yml
-  - import_tasks: software/docker-compose.yml
-  - import_tasks: system_setup/docker-users.yml
+- name: docker | run OS specific setup
+  block:
+    - import_tasks: "system_setup/setup-{{ docker_os_key }}.yml"
+
+    - import_tasks: system_setup/docker-packages.yml
+    - import_tasks: software/docker-compose-plugin.yml
+    - import_tasks: system_setup/directory.yml
+    - import_tasks: software/docker-compose.yml
+    - import_tasks: system_setup/docker-users.yml
 
