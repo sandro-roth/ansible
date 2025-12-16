@@ -1,0 +1,10 @@
+---
+docker_os_key: Archlinux
+
+docker_add_repo: false
+
+docker_packages:
+  - docker
+  - containerd
+  - docker-buildx
+  - docker-compose
