@@ -35,7 +35,7 @@ docker_repo_url: https://download.docker.com/linux
 
 # A list of users who will be added to the docker group
 docker_users:
-  - sandro
+  - "{{ main_user }}"
 
 # Docker daemon option as a dict
 docker_daemon_options:
