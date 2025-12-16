@@ -1,0 +1,12 @@
+---
+docker_os_key: Darwin
+
+docker_add_repo: false
+docker_service_manage: false
+
+docker_packages: []
+
+docker_install_compose_plugin: false
+docker_install_compose: false
+
+docker_mac_cask: docker
