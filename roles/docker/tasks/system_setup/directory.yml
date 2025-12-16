@@ -4,7 +4,9 @@
     path: /etc/docker
     state: directory
     mode: 0755
-  when: docker_daemon_options.keys() | length > 0
+  when: >
+    ansible_system != 'Darwin'
+    and docker_daemon_options.keys() | length > 0
 
 - name: system setup | docker | cofigure daemon
   tags: docker, daemon
@@ -12,7 +14,9 @@
     content: "{{ docker_daemon_options | to_nice_json }}"
     dest: /etc/docker/daemon.json
     mode: 0644
-  when: docker_daemon_options.keys() | length > 0
+  when: >
+    ansible_system != 'Darwin'
+    and docker_daemon_options.keys() | length > 0
   notify: restart docker
 
 - name: system setup | docker | running at boot
@@ -21,9 +25,12 @@
     name: docker
     state: "{{ docker_service_state }}"
     enabled: "{{ docker_service_enabled }}"
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: docker_service_manage | bool
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: >
+    ansible_system != 'Darwin'
+    and docker_service_manage | bool
 
 - name: system setup | docker | flush handlers | avoid firewall conflicts
   tags: docker, flush handlers, firewall
   meta: flush_handlers
+  when: ansible_system != 'Darwin'
