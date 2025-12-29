@@ -1,5 +1,6 @@
 - name: software | packages_git | clone tmux-completion plugin repository
   tags: dotfiles,sandro,users,tmux
+  become_user: sandro
   git:
     repo: https://github.com/srsudar/tmux-completion.git
     dest: "{{ usr_home }}/.tmux/plugins/completion"
@@ -8,6 +9,7 @@
 
 - name: software | packages_git | clone tmux-continuum plugin repository
   tags: dotfiles,sandro,users,tmux
+  become_user: sandro
   git:
     repo: https://github.com/tmux-plugins/tmux-continuum
     dest: "{{ usr_home }}/.tmux/plugins/continuum"
@@ -16,14 +18,16 @@
 
 - name: software | packages_git | clone tmux-resurrect plugin repository
   tags: dotfiles,sandro,users,tmux
+  become_user: sandro
   git:
     repo: https://github.com/tmux-plugins/tmux-resurrect
-    dest: "{{ usr_home }}/.tmux/plugins/resurrect"
+    dest: "{{ usr_home }}/.tmux/plugins/resurrect"
     force: yes
   notify: update_tmux_plugin_perms
 
 - name: software | packages_git | clone tmux-pluginmanager plugin repository
   tags: dotfiles, sandro, users, tmux
+  become_user: sandro
   git:
     repo: https://github.com/tmux-plugins/tpm
     dest: "{{ usr_home }}/.tmux/plugins/tpm"
@@ -32,7 +36,8 @@
 
 - name: software | packages_git | checkout git repositories
   tags: git,users,sandro
-  become: yes
+  become: true
+  become_user: sandro
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"

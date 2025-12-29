@@ -32,6 +32,7 @@
 
 - name: system setup | utilities | install utilities packages (macOS)
   tags: packages, system, settings
+  become: false
   community.general.homebrew:
     state: present
     name:

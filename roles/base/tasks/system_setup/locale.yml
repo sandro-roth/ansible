@@ -1,10 +1,3 @@
-- name: system setup | locale | add de_CH
-  tags: locale, system, setup
-  locale_gen:
-    name: de_CH.UTF-8
-    state: present
-  when: ansible_os_family != "Darwin"
-
 - name: system setup | locale | set locale to de_CH
   tags: locale, system, setup
   locale_gen:
@@ -44,5 +37,6 @@
 
 - name: system setup | locale | apply language + region in macOS preferences
   tags: locale, system, setup
+  become: false
   command: defaults write NSGlobalDomain AppleLocale -string "de_CH"
   when: ansible_os_family == "Darwin"

@@ -4,6 +4,7 @@
   when: ansible_os_family != "Darwin"
 
 - name: pip install packages (macOS)
+  become: false
   pip:
     name: "{{ pip_packages }}"
     executable: /opt/homebrew/bin/pip3

@@ -14,8 +14,13 @@
   when:
     - ansible_os_family != "Darwin"
     - ansible_system == "Linux"
+    - fwupd_check is defined
     - fwupd_check.rc == 0
+    - fwupd_check.stdout is defined
+    - fwupd_check.stdout | length > 0
     - "'No detected devices with firmware updates' not in fwupd_check.stdout"
+    - "'No upgrades for' not in fwupd_check.stdout"
+    - "'Nothing to do' not in fwupd_check.stdout"
 
 - name: system setup | firmware | upgrade all packages (apt only)
   tags: firmware
