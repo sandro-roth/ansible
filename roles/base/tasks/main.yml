@@ -6,6 +6,7 @@
   # Create users on the system
   - import_tasks: users/sandro.yml
   - import_tasks: users/root.yml
+  - import_tasks: users/simone.yml
 
   # Install software
   - import_tasks: software/repositories.yml
