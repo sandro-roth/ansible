@@ -1,8 +1,6 @@
 # Main user (will be added to docker)
 main_user: sandro
 
-#
-
 # ssh default settings
 security_ssh_port: 1630
 security_ssh_password_authentication: "no"
@@ -13,7 +11,7 @@ security_ssh_challenge_response_auth: "no"
 security_ssh_gss_api_authentification: "no"
 security_ssh_x11_forwarding: "no"
 
-security_ssh_allowed_users: "sandro"
+security_ssh_allowed_users: "sandro simone"
 security_sshd_state: started
 security_ssh_restart_handler_state: restarted
 

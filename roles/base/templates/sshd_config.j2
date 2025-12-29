@@ -5,7 +5,7 @@ Port {{ security_ssh_port | default(22) }}
 Protocol 2
 
 # Authentication:
-AllowUsers {{ security_ssh_allowed_users | default("sandro") }}
+AllowUsers {{ security_ssh_allowed_users | default("sandro simone") }}
 ChallengeResponseAuthentication {{ security_ssh_challenge_response_auth | default("no") }}
 HostbasedAuthentication no
 LoginGraceTime 120
