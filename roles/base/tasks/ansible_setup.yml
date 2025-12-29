@@ -98,7 +98,7 @@
 - name: ansible setup | install provision script (macos)
   tags: [ansible, ansible-setup, scripts]
   ansible.builtin.template:
-    src: provision.sh.j2
+    src: provision-macos.sh.j2
     dest: /usr/local/bin/provision
     owner: root
     group: wheel
