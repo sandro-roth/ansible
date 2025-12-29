@@ -8,10 +8,15 @@
   - import_tasks: users/root.yml
   - import_tasks: users/simone.yml
 
-  # Install software
-  - import_tasks: software/repositories.yml
+  # Install Homebrew
   - import_tasks: software/homebrew.yml
     when: ansible_os_family == "Darwin"
+
+  # Set up the ansible environment
+  - import_tasks: ansible_setup.yml
+
+  # Install software
+  - import_tasks: software/repositories.yml
   - import_tasks: software/packages_development.yml
   - import_tasks: software/packages_git.yml
   - import_tasks: software/packages_cleanup.yml
