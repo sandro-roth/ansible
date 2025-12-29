@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ANSIBLEUSER="{{ ansible_user_name | default(ansible_user_id) }}"
+BRANCH="{{ branch | default('main') }}"
+REPO="{{ ansible_repo_url }}"
+VAULT_KEY="{{ ansible_vault_key_path }}"
+
+# Log to user space on macOS
+LOGDIR="${HOME}/Library/Logs"
+LOGFILE="${LOGDIR}/ansible.log"
+
+mkdir -p "$LOGDIR"
+
+timestamp() { date +"%Y-%m-%d %H:%M:%S"; }
+
+# Ensure ansible-pull exists in PATH
+if ! command -v ansible-pull >/dev/null 2>&1; then
+  printf "\n%s ansible-pull not found in PATH. Install Ansible first.\n" "$(timestamp)" | tee -a "$LOGFILE"
+  exit 1
+fi
+
+if pgrep -f "ansible-pull" >/dev/null 2>&1; then
+  printf "\n%s A running ansible-pull process was found. Exiting.\n" "$(timestamp)" | tee -a "$LOGFILE"
+  exit 1
+fi
+
+TAGS="${1:-}"
+
+# On macOS you usually run as the logged in user.
+# If you really need sudo for some tasks, Ansible will prompt when required.
+if [ -n "$TAGS" ]; then
+  ansible-pull --vault-password-file="$VAULT_KEY" -U "$REPO" -C "$BRANCH" --tags "$TAGS" 2>&1 | tee -a "$LOGFILE"
+else
+  ansible-pull --vault-password-file="$VAULT_KEY" -o -U "$REPO" -C "$BRANCH" 2>&1 | tee -a "$LOGFILE"
+fi
+

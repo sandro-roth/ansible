@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ANSIBLEUSER="{{ ansible_user_name | default('simone') }}"
+BRANCH="{{ branch | default('main') }}"
+LOGFILE="/var/log/ansible.log"
+REPO="{{ ansible_repo_url }}"
+VAULT_KEY="{{ ansible_vault_key_path }}"
+
+timestamp() { date +"%Y-%m-%d %H:%M:%S"; }
+
+# Use systemd-inhibit only if present
+PRECMD=""
+if command -v systemd-inhibit >/dev/null 2>&1; then
+  PRECMD="systemd-inhibit --who=ansible-pull --why=provisioning"
+fi
+
+if pgrep -f "ansible-pull" >/dev/null 2>&1; then
+  printf "\n%s A running ansible-pull process was found. Exiting.\n" "$(timestamp)" | tee -a "$LOGFILE"
+  exit 1
+fi
+
+TAGS="${1:-}"
+
+if [ -n "$TAGS" ]; then
+  $PRECMD sudo -i -u "$ANSIBLEUSER" \
+    ansible-pull --vault-password-file="$VAULT_KEY" -U "$REPO" -C "$BRANCH" --tags "$TAGS" 2>&1 | tee -a "$LOGFILE"
+else
+  $PRECMD sudo -i -u "$ANSIBLEUSER" \
+    ansible-pull --vault-password-file="$VAULT_KEY" -o -U "$REPO" -C "$BRANCH" 2>&1 | tee -a "$LOGFILE"
+fi
+
