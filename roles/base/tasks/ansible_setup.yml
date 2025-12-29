@@ -1,0 +1,106 @@
+- name: ansible setup | ensure ansible is the latest version
+  tags: ansible, ansible-setup
+  ansible.builtin.package:
+    name: ansible
+    state: latest
+  when: ansible_system != "Darwin"
+
+- name: ansible setup | install required packages (linux)
+  tags: ansible, ansible-setup, packages
+  ansible.builtin.package:
+    name:
+      - "{{ dconf_package }}"
+      - “{{ python_psutil_package }}"
+    state: present
+  when: ansible_system != "Darwin"
+
+# Debian family only
+- name: ansible setup | install acl package
+  tags: ansible, ansible-setup, packages
+  ansible.builtin.package:
+    name: acl
+    state: latest
+  when: ansible_distribution in ["Debian", "Ubuntu"]
+
+# MacOs Homebrew
+- name: ansible setup | ensure homebrew is present
+  tags: ansible, ansible-setup
+  become: false
+  community.general.homebrew:
+    update_homebrew: true
+  when: ansible_system == "Darwin"
+
+- name: ansible setup | install ansible via homebrew
+  tags: ansible, ansible-setup
+  become: false
+  community.general.homebrew:
+    name: ansible
+    state: latest
+  when: ansible_system == "Darwin"
+
+- name: ansible setup | install required packages via homebrew
+  tags: ansible, ansible-setup, packages
+  become: false
+  community.general.homebrew:
+    name:
+      - "{{ dconf_package }}"
+      - "{{ python_psutil_package }}"
+    state: present
+  when: ansible_system == "Darwin"
+
+# Logging only on Linux
+- name: ansible setup | ensure ansible group exists
+  tags: [ansible, ansible-setup]
+  ansible.builtin.group:
+    name: ansible
+    state: present
+  when: ansible_system != "Darwin"
+
+- name: ansible setup | create ansible log file
+  tags: [ansible, ansible-setup]
+  ansible.builtin.file:
+    path: /var/log/ansible.log
+    owner: simone
+    group: ansible
+    mode: "0664"
+    state: touch
+  changed_when: false
+  when: ansible_system != "Darwin"
+
+- name: ansible setup | add logrotate config
+  tags: [ansible-setup]
+  ansible.builtin.copy:
+    src: files/ansible_setup/logrotate
+    dest: /etc/logrotate.d/ansible
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_system != "Darwin"
+
+- name: ansible setup | remove default ansible directory
+  tags: [ansible, ansible-setup]
+  ansible.builtin.file:
+    path: /etc/ansible
+    state: absent
+  when: ansible_system != "Darwin"
+
+# Provision script
+- name: ansible setup | install provision script (linux)
+  tags: [ansible, ansible-setup, scripts]
+  ansible.builtin.template:
+    src: provision.sh.j2
+    dest: /usr/local/bin/provision
+    owner: root
+    group: root
+    mode: "0755"
+  when: ansible_system != "Darwin"
+
+- name: ansible setup | install provision script (macos)
+  tags: [ansible, ansible-setup, scripts]
+  ansible.builtin.template:
+    src: provision.sh.j2
+    dest: /usr/local/bin/provision
+    owner: root
+    group: wheel
+    mode: "0755"
+  when: ansible_system == "Darwin"
