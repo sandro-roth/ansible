@@ -8,6 +8,7 @@
 
 - name: system setup | packages | install bpytop MacOS
   tags: bpytop, packages, python
+  become: false
   community.general.homebrew:
     name: bpytop
     state: present

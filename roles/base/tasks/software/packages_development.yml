@@ -11,6 +11,7 @@
 
 - name: software | development packages | install packages (macOS)
   tags: dev, development, packages, python
+  become: false
   community.general.homebrew:
     name:
       - git
