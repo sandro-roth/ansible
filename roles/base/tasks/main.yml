@@ -13,7 +13,7 @@
     when: ansible_os_family == "Darwin"
 
   # Set up the ansible environment
-  - import_tasks: ansible_setup.yml
+  #- import_tasks: ansible_setup.yml
 
   # Install software
   - import_tasks: software/repositories.yml
