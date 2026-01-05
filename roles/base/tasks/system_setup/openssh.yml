@@ -75,7 +75,7 @@
   become: false
   shell: "netstat -an | grep '\\.{{ security_ssh_port }} ' | grep LISTEN"
   register: ssh_port_check_macos
-  retires: 10
+  retries: 10
   delay: 2
   until: ssh_port_check_macos.stdout != ""
   changed_when: false
