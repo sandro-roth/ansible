@@ -43,6 +43,11 @@
     - security_ssh_port is defined
 
 # macOS: use the built-in SSH server (Remote Login), not Homebrew OpenSSH
+- name: system setup | openssh | enable Remote Login (macOS SSH server)
+  tags: openssh, ssh, system, settings
+  command: systemsetup -setremotelogin on
+  when: ansible_os_family == "Darwin"
+
 - name: system setup | openssh | ensure /etc/ssh/sshd_config exists (macOS)
   tags: openssh, ssh, system, settings
   file:
@@ -65,17 +70,14 @@
     - ansible_os_family == "Darwin"
     - security_ssh_port is defined
 
-- name: system setup | openssh | enable Remote Login (macOS SSH server)
-  tags: openssh, ssh, system, settings
-  command: systemsetup -setremotelogin on
-  when: ansible_os_family == "Darwin"
-
 - name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }} (macOS)
   tags: openssh, ssh, system, settings
   become: false
   shell: "netstat -an | grep '\\.{{ security_ssh_port }} ' | grep LISTEN"
   register: ssh_port_check_macos
-  failed_when: ssh_port_check_macos.stdout == ""
+  retires: 10
+  delay: 2
+  until: ssh_port_check_macos.stdout != ""
   changed_when: false
   when:
     - ansible_os_family == "Darwin"
