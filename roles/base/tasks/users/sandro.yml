@@ -41,9 +41,11 @@
   tags: dotfiles, sandro, ssh, ssh-keys, users
   authorized_key:
     user: sandro
+    state: present
     key: "{{ item }}"
   with_file:
     - users/sandro/ssh/id_ed25519.pub
+    - users/sandro/ssh/ansible.pub
 
 - name: users | sandro | create config directories
   tags: dotfiles, sandro, tmux, users, vim, zsh
