@@ -4,7 +4,7 @@
     name: sandro
     state: present
 
-- name: users | sandro | create user
+- name: users | sandro | create user (Linux)
   tags: sandro, sudo, users
   user:
     name: sandro
@@ -16,6 +16,20 @@
     shell: /bin/zsh
     home: "{{ usr_home }}"
     create_home: yes
+  when: ansible_os_family != "Darwin"
+
+- name: users | sandro | create user (maxOs)
+  tags: sandro, sudo, users
+  user:
+    name: sandro
+    group: sandro
+    groups: "{{ usr_extra_groups }}"
+    state: present
+    comment: "Sandro main"
+    shell: /bin/zsh
+    home: "{{ usr_home }}"
+    create_home: yes
+  when: ansible_os_family == "Darwin"
 
 - name: users | sandro | add sudoers file
   tags: sandro, settings, simone, sudo, system, users
