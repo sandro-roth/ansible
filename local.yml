@@ -15,10 +15,17 @@
       changed_when: False
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
+- hosts: mac
+  tags: gather_facts, always
+  gather_facts: true
+  become: false
+  tasks:[]
+
 # run roles
 
 - hosts: all
   tags: base
+  gather_facts: false
   become: true
   roles:
     - base
@@ -32,6 +39,7 @@
 
 - hosts: mac
   tags: macbook
+  gather_facts: false
   become: true
   roles:
     - macbook
