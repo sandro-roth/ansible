@@ -25,6 +25,7 @@
 # tasks to complete before running roles
 - hosts: all
   tags: always
+  gather_facts: false
   become: true
   pre_tasks:
     - name: pre-run | update package cache (arch)
