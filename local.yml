@@ -6,10 +6,11 @@
     bootstrap
 
 - hosts: all
-  tags: gather_facts, always
-  gather_facts: true
-  become: false
-  tasks: []
+  tags: always, bootstrap
+  gather_facts: false
+  tasks:
+    - name: gather facts after bootstrap
+      setup:
 
 # tasks to complete before running roles
 - hosts: all
