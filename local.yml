@@ -3,7 +3,7 @@
   gather_facts: false
   become: true
   roles:
-    bootstrap
+    - bootstrap
 
 - hosts: all
   tags: always, bootstrap
