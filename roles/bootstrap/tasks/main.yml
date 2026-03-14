@@ -1,27 +1,107 @@
 ---
-- name: bootstrap | macOS | check if Command Line Tool are installed
+- name: bootstrap | macOS | check if Command Line Tools are installed
   raw: xcode-select -p
   register: clt_check
   changed_when: false
   failed_when: false
 
-- name: trigger Command Line Tools install
-  raw: |
-    touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-    PROD=$(softwareupdate -l 2>/dev/null | awk -F'*' '/\*.*Command Line Tools/ {print $2}' | sed 's/^ *//' | tail -n 1)
-    if [ -n "$PROD" ]; then
-      softwareupdate -i "$PROD" --verbose
-    fi
-    rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+- name: bootstrap | macOS | create install marker
+  raw: touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  changed_when: false
   when: clt_check.rc != 0
 
-- name: wait until Command Line Tools are available
+- name: bootstrap | macOS | list available software updates
+  raw: softwareupdate -l
+  register: softwareupdate_list
+  changed_when: false
+  failed_when: false
+  when: clt_check.rc != 0
+
+- name: bootstrap | macOS | show available software updates
+  debug:
+    var: softwareupdate_list.stdout_lines
+  when: clt_check.rc != 0
+
+- name: bootstrap | macOS | extract Command Line Tools package
+  set_fact:
+    clt_package: >-
+      {{
+        softwareupdate_list.stdout_lines
+        | select('search', 'Command Line Tools')
+        | list
+        | last
+        | default('')
+        | regex_replace('^\\s*\\*\\s*', '')
+        | trim
+      }}
+  when: clt_check.rc != 0
+
+- name: bootstrap | macOS | fail if no Command Line Tools package was found
+  fail:
+    msg: |
+      No Command Line Tools package was found in softwareupdate output.
+      Full output:
+      {{ softwareupdate_list.stdout }}
+  when:
+    - clt_check.rc != 0
+    - clt_package | default('') == ''
+
+- name: bootstrap | macOS | install Command Line Tools package
+  raw: softwareupdate -i "{{ clt_package }}" --verbose
+  register: clt_install
+  changed_when: true
+  failed_when: false
+  when:
+    - clt_check.rc != 0
+    - clt_package | default('') != ''
+
+- name: bootstrap | macOS | show install output
+  debug:
+    var: clt_install.stdout_lines
+  when:
+    - clt_check.rc != 0
+    - clt_install is defined
+
+- name: bootstrap | macOS | show install stderr
+  debug:
+    var: clt_install.stderr_lines
+  when:
+    - clt_check.rc != 0
+    - clt_install is defined
+
+- name: bootstrap | macOS | remove install marker
+  raw: rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  changed_when: false
+  failed_when: false
+  when: clt_check.rc != 0
+
+- name: bootstrap | macOS | wait until Command Line Tools are available
   raw: xcode-select -p
   register: clt_ready
   changed_when: false
+  failed_when: false
   until: clt_ready.rc == 0
-  retries: 30
-  delay: 20
+  retries: 10
+  delay: 30
+
+- name: bootstrap | macOS | fail if Command Line Tools are still unavailable
+  fail:
+    msg: |
+      Command Line Tools are still unavailable after install attempt.
+      Last xcode-select result:
+      rc={{ clt_ready.rc }}
+      stdout={{ clt_ready.stdout }}
+      stderr={{ clt_ready.stderr }}
+
+      softwareupdate output:
+      {{ softwareupdate_list.stdout }}
+
+      install stdout:
+      {{ clt_install.stdout | default('') }}
+
+      install stderr:
+      {{ clt_install.stderr | default('') }}
+  when: clt_ready.rc != 0
 
 - name: bootstrap | macOS | reset connection
   meta: reset_connection
