@@ -19,7 +19,7 @@
   tags: gather_facts, always
   gather_facts: true
   become: false
-  tasks:[]
+  tasks: []
 
 # run roles
 
