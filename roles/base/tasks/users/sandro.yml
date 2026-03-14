@@ -9,16 +9,16 @@
   user:
     name: sandro
     group: sandro
-    groups: "{{ usr_extra_groups }}"
+    groups: "{{ usr_extra_groups }}"
     state: present
     comment: "Sandro main"
     password: "{{ sandro_passwd }}"
     shell: /bin/zsh
-    home: "{{ usr_home }}"
+    home: "{{ usr_home }}"
     create_home: yes
   when: ansible_os_family != "Darwin"
 
-- name: users | sandro | create user (maxOs)
+- name: users | sandro | create user (macOs)
   tags: sandro, sudo, users
   user:
     name: sandro
@@ -39,6 +39,8 @@
     owner: root
     group: root
     mode: 0440
+    validate: /usr/sbin/visudo -cf %s
+  when: ansible_os_family != "Darwin"
 
 - name: users | sandro | create .ssh directory
   tags: dotfiles, sandro, ssh, users
