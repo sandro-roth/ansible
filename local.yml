@@ -1,3 +1,14 @@
+- hosts: mac
+  tags: always, bootstrap
+  gather_facts: false
+  become: true
+  tasks:
+    - name: bootstrap | macOS | check if Command Line Tool are installed
+      raw: xcode-select -p
+      register: clt_check
+      changed_when: false
+      failed_when: false
+
 # tasks to complete before running roles
 - hosts: all
   tags: always
