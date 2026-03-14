@@ -22,16 +22,16 @@
     var: softwareupdate_list.stdout_lines
   when: clt_check.rc != 0
 
-- name: bootstrap | macOS | extract Command Line Tools package
+- name: bootstrap | macOS | extract Command Line Tools package label
   set_fact:
     clt_package: >-
       {{
         softwareupdate_list.stdout_lines
-        | select('search', 'Command Line Tools')
+        | select('match', '^\\* Label: Command Line Tools')
         | list
         | last
         | default('')
-        | regex_replace('^\\s*\\*\\s*', '')
+        | regex_replace('^\\* Label: ', '')
         | trim
       }}
   when: clt_check.rc != 0
