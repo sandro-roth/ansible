@@ -1,0 +1,27 @@
+---
+- name: bootstrap | macOS | check if Command Line Tool are installed
+  raw: xcode-select -p
+  register: clt_check
+  changed_when: false
+  failed_when: false
+
+- name: trigger Command Line Tools install
+  raw: |
+    touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    PROD=$(softwareupdate -l 2>/dev/null | awk -F'*' '/\*.*Command Line Tools/ {print $2}' | sed 's/^ *//' | tail -n 1)
+    if [ -n "$PROD" ]; then
+      softwareupdate -i "$PROD" --verbose
+    fi
+    rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  when: clt_check.rc != 0
+
+- name: wait until Command Line Tools are available
+  raw: xcode-select -p
+  register: clt_ready
+  changed_when: false
+  until: clt_ready.rc == 0
+  retries: 30
+  delay: 20
+
+- name: bootstrap | macOS | reset connection
+  meta: reset_connection
