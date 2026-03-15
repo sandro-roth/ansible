@@ -7,6 +7,7 @@
   - import_tasks: users/sandro.yml
   - import_tasks: users/root.yml
   - import_tasks: users/simone.yml
+    when: "'server' in group_names"
 
   # Install Homebrew
   - import_tasks: software/homebrew.yml
