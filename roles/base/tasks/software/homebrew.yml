@@ -32,6 +32,7 @@
       environment:
         NONINTERACTIVE: "1"
       become: false
+      become_user: "{{ main_user }}"
       when: not brew_stat.stat.exists
 
     - name: software | homebrew | refresh brew stat
