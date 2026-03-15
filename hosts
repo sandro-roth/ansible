@@ -1,8 +1,8 @@
 [tower]
-#ubuntu_tw ansible_host=10.58.120.100 ansible_user=sandro
+#ubuntu_tw ansible_host=10.58.120.100 ansible_user=sandro #ansible_port=1630
 
 [server]
-#nas ansible_host=10.58.16.17 ansible_user=sandro
+#nas ansible_host=10.58.16.17 ansible_user=sandro #ansible_port=1630
 
 [mac]
 macbook ansible_host=10.58.140.2 ansible_user=sandro
