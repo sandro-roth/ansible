@@ -4,22 +4,23 @@
     update_cache=yes
   when: ansible_os_family == "Debian"
 
-- name: restart_sshd
+- name: restart sshd linux
+  listen: restart_sshd
   service:
     name: "{{ openssh_service }}"
     state: restarted
-  when: ansible_os_family != "Darwin"
+  when: ansible_system == "Linux"
 
-- name: restart_sshd_macos
+- name: restart sshd macos off
   listen: restart_sshd_macos
-  block:
-    - name: handlers | openssh | disable Remote Login (macOS)
-      command: systemsetup -setremotelogin off
-      changed_when: false
+  command: systemsetup -setremotelogin off
+  changed_when: false
+  when: ansible_os_family == "Darwin"
 
-    - name: handlers | openssh | enable Remote Login (macOS)
-      command: systemsetup -setremotelogin on
-      changed_when: false
+- name: restart sshd macos on
+  listen: restart_sshd_macos
+  command: systemsetup -setremotelogin on
+  changed_when: false
   when: ansible_os_family == "Darwin"
 
 - name: reload_fail2ban
