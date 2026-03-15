@@ -17,6 +17,5 @@
       - git
       - "{{ python_package }}"
       - "{{ python_virtualenv_package }}"
-      - "{{ python_setuptools }}"
     state: present
   when: ansible_os_family == "Darwin"

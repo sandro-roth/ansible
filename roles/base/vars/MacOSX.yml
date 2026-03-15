@@ -15,7 +15,6 @@ openssh_service: ssh
 python_package: python
 python_psutil_package: psutil
 python_virtualenv_package: virtualenv
-python_setuptools: setuptools
 
 # Diverses
 rename_package: rename
