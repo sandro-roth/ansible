@@ -12,8 +12,7 @@ openssh_package: openssh
 openssh_service: ssh
 
 #Python Umfeld
-python_package: python3
-python_pip_package: pip3
+python_package: python
 python_psutil_package: psutil
 python_virtualenv_package: virtualenv
 python_setuptools: setuptools
