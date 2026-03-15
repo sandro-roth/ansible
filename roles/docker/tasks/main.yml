@@ -18,6 +18,8 @@
       when: ansible_system != "Darwin"
 
     - import_tasks: software/docker-compose-plugin.yml
+      when: ansible_system != "Darwin"
+
     - import_tasks: system_setup/directory.yml
     - import_tasks: software/docker-compose.yml
     - import_tasks: system_setup/docker-users.yml
