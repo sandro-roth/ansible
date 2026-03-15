@@ -1,69 +1,106 @@
-# aliases
+# navigation
 alias ..='cd ..'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
-alias back='cd $OLDPWD'
+alias ...='cd ../../..'
+alias ....='cd ../../../..'
+alias back='cd "$OLDPWD"'
 alias c='clear'
 alias cd..='cd ..'
-alias cp='cp -iv'
-alias chmod="chmod -c"
-alias e="vim -O "
-alias E="vim -o "
-alias extip='curl icanhazip.com'
-alias grep='grep --color=auto'
-alias l.=' ls -lhFa --time-style=long-iso --color=auto'
-alias ll=' ls'
-alias ls=' ls -lhF --time-style=long-iso --color=auto'
-alias lsmount='mount |column -t'
-alias mkdir='mkdir -pv'
-alias ports='netstat -tulanp'
-alias h='history'
-alias mv='mv -iv'
-alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
-alias ssha='eval $(ssh-agent) && ssh-add'
+
+# editor
+alias e='vim -O'
+alias E='vim -o'
 alias svim='sudo vim'
-alias tn=' tmux new -s'
-alias weather='curl wttr.in'
+
+# history
+alias h='history'
+alias reload='source "$HOME/.bashrc"'
+
+# network and misc
+alias extip='curl -fsSL icanhazip.com'
+alias ssha='eval "$(ssh-agent -s)" && ssh-add'
+alias tn='tmux new -s'
+alias weather='curl -fsSL wttr.in'
 alias wget='wget -c'
 
-## get top process eating memory
-alias mem5='ps auxf | sort -nr -k 4 | head -5'
-alias mem10='ps auxf | sort -nr -k 4 | head -10'
-
-## get top process eating cpu ##
-alias cpu5='ps auxf | sort -nr -k 3 | head -5'
-alias cpu10='ps auxf | sort -nr -k 3 | head -10'
-
-## List largest directories (aka "ducks")
-alias dir5='du -cksh * | sort -hr | head -n 5'
-alias dir10='du -cksh * | sort -hr | head -n 10'
-
-# Safetynets
-# do not delete / or prompt if deleting more than 3 files at a time #
-alias rm='rm -I --preserve-root'
-
-# confirmation #
-alias mv='mv -i'
+# file operations
+alias mkdir='mkdir -pv'
 alias cp='cp -i'
+alias mv='mv -i'
 alias ln='ln -i'
 
-# Parenting changing perms on / #
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
+# process helpers
+alias mem5='ps aux | sort -nr -k 4 | head -5'
+alias mem10='ps aux | sort -nr -k 4 | head -10'
+alias cpu5='ps aux | sort -nr -k 3 | head -5'
+alias cpu10='ps aux | sort -nr -k 3 | head -10'
 
-# reload bash config
-alias reload="source ~/.bashrc"
+# largest directories
+alias dir5='du -cksh ./* 2>/dev/null | sort -hr | head -n 5'
+alias dir10='du -cksh ./* 2>/dev/null | sort -hr | head -n 10'
 
-# Manage packages easier
-if [ -f /usr/bin/apt ]; then
+# grep color, only if supported
+if grep --color=auto "" /dev/null >/dev/null 2>&1; then
+  alias grep='grep --color=auto'
+fi
+
+# ls variants, Linux and macOS separately
+if ls --color=auto >/dev/null 2>&1; then
+  alias ls='ls -lhF --time-style=long-iso --color=auto'
+  alias l.='ls -lhFa --time-style=long-iso --color=auto'
+  alias ll='ls'
+else
+  alias ls='ls -lhFG'
+  alias l.='ls -lhFaG'
+  alias ll='ls'
+fi
+
+# chmod alias, only if supported
+if chmod -c . >/dev/null 2>&1; then
+  alias chmod='chmod -c'
+fi
+
+# safety nets, GNU only where available
+if rm --preserve-root / >/dev/null 2>&1; then
+  alias rm='rm -I --preserve-root'
+  alias chown='chown --preserve-root'
+  alias chgrp='chgrp --preserve-root'
+  alias chmod='chmod --preserve-root'
+else
+  alias rm='rm -I'
+fi
+
+# package management
+if [ -x /usr/bin/apt ]; then
   alias update='sudo apt update'
   alias upgrade='sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && sudo apt clean'
   alias install='sudo apt install'
 fi
 
-if [ -f /usr/bin/pacman ]; then
+if [ -x /usr/bin/pacman ]; then
   alias update='sudo pacman -Syyy'
   alias upgrade='sudo pacman -Syu'
   alias install='sudo pacman -S'
+fi
+
+if [ -x /opt/homebrew/bin/brew ] || command -v brew >/dev/null 2>&1; then
+  alias update='brew update'
+  alias upgrade='brew upgrade && brew cleanup'
+  alias install='brew install'
+fi
+
+# Linux specific helpers
+if [ "$(uname)" = "Linux" ]; then
+  alias ports='netstat -tulanp'
+fi
+
+# macOS specific helpers
+if [ "$(uname)" = "Darwin" ]; then
+  alias ports='netstat -anv | grep LISTEN'
+fi
+
+# speedtest, prefer python3 if available
+if command -v python3 >/dev/null 2>&1; then
+  alias speedtest='curl -fsSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
+elif command -v python >/dev/null 2>&1; then
+  alias speedtest='curl -fsSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
 fi
