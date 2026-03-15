@@ -74,10 +74,5 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
 
-# parenting changing perms on /
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
-
 # reload bash config
 alias reload='source "$HOME/.bashrc"'
