@@ -11,18 +11,6 @@
     state: restarted
   when: ansible_system == "Linux"
 
-- name: restart sshd macos off
-  listen: restart_sshd_macos
-  command: systemsetup -setremotelogin off
-  changed_when: false
-  when: ansible_os_family == "Darwin"
-
-- name: restart sshd macos on
-  listen: restart_sshd_macos
-  command: systemsetup -setremotelogin on
-  changed_when: false
-  when: ansible_os_family == "Darwin"
-
 - name: reload_fail2ban
   service:
     name: fail2ban
