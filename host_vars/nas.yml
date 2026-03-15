@@ -1,6 +1,7 @@
 ---
 branch: main
 
+usr_group: sandro
 ansible_cron_minute: "40"
 
 # platform-specific
