@@ -58,6 +58,3 @@ case ":$PATH:" in
 esac
 
 export PATH
-
-# reload bash config
-alias reload='source "$HOME/.bashrc"'
