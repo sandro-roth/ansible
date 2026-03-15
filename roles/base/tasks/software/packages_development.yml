@@ -15,6 +15,7 @@
   community.general.homebrew:
     name:
       - git
+      - iterm2
       - "{{ python_package }}"
       - "{{ python_virtualenv_package }}"
     state: present
