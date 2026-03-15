@@ -54,12 +54,12 @@ if grep --color=auto "" /dev/null >/dev/null 2>&1; then
 fi
 
 # ls variants, Linux vs macOS
-if ls --color=auto >/dev/null 2>&1; then
-  alias ls='ls -lhF --color=auto --time-style=long-iso --classify'
-  alias l.='ls -lhFa --color=auto --time-style=long-iso'
-else
+if [ "$(uname)" = "Darwin" ]; then
   alias ls='ls -lhFG'
   alias l.='ls -lhFaG'
+else
+  alias ls='ls -lhF --color=auto --time-style=long-iso --classify'
+  alias l.='ls -lhFa --color=auto --time-style=long-iso'
 fi
 
 alias ll='ls'
