@@ -60,7 +60,14 @@ esac
 export PATH
 
 # safetynets
-alias rm='rm -I --preserve-root'
+if rm --help 2>/dev/null | grep -q -- '--preserve-root'; then
+    alias rm='rm -I --preserve-root'
+    alias chown='chown --preserve-root'
+    alias chmod='chmod --preserve-root'
+    alias chgrp='chgrp --preserve-root'
+else
+    alias rm='rm -I'
+fi
 
 # confirmation
 alias mv='mv -i'
