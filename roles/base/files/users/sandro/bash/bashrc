@@ -1,17 +1,22 @@
 # source bash prompt
-source ~/.bash/bash_prompt
+source "$HOME/.bash/bash_prompt"
 
-# Source bash aliases
-source ~/.bash/bash_aliases
+# source bash aliases
+source "$HOME/.bash/bash_aliases"
 
-# Source bash functions
-source ~/.bash/bash_functions
+# source bash functions
+source "$HOME/.bash/bash_functions"
 
-# Env
+# env
 export TERM=xterm-256color
 export EDITOR=vim
 
-# Show system information at login
+# Homebrew on macOS
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# show system information at login
 if [ -t 0 ]; then
     if type -p "neofetch" > /dev/null; then
         neofetch
@@ -20,49 +25,52 @@ if [ -t 0 ]; then
     fi
 fi
 
-# Don't add duplicate lines or lines beginning with a space to the history
+# don't add duplicate lines or lines beginning with a space to the history
 HISTCONTROL=ignoreboth
 
-# Set history format to include timestamps
+# set history format to include timestamps
 HISTTIMEFORMAT="%Y-%m-%d %T "
 
-# Correct simple errors while using cd
+# correct simple errors while using cd
 shopt -s cdspell
 
-# Add /home/$USER/bin to $PATH
-case :$PATH: in
-	*:/home/$USER/bin:*) ;;
-	*) PATH=/home/$USER/bin:$PATH ;;
+# add $HOME/bin to PATH
+case ":$PATH:" in
+    *:"$HOME/bin":*) ;;
+    *) PATH="$HOME/bin:$PATH" ;;
 esac
 
-# Add /home/$USER/.local/bin to $PATH
-case :$PATH: in
-	*:/home/$USER/.local/bin:*) ;;
-	*) PATH=/home/$USER/.local/bin:$PATH ;;
+# add $HOME/.local/bin to PATH
+case ":$PATH:" in
+    *:"$HOME/.local/bin":*) ;;
+    *) PATH="$HOME/.local/bin:$PATH" ;;
 esac
 
-# Enable tab completion for tmux
-source /home/sandro/.tmux/plugins/completion/tmux
+# enable tab completion for tmux
+if [ -f "$HOME/.tmux/plugins/completion/tmux" ]; then
+    source "$HOME/.tmux/plugins/completion/tmux"
+fi
 
-# Add /home/$USER/.tmux/tmuxifier to $PATH
-case :$PATH: in
-	*:/home/$USER/.tmux/tmuxifier/bin:*) ;;
-	*) PATH=/home/$USER/.tmux/tmuxifier/bin:$PATH ;;
+# add tmuxifier to PATH
+case ":$PATH:" in
+    *:"$HOME/.tmux/tmuxifier/bin":*) ;;
+    *) PATH="$HOME/.tmux/tmuxifier/bin:$PATH" ;;
 esac
 
-# Safetynets
-# do not delete / or prompt if deleting more than 3 files at a time #
+export PATH
+
+# safetynets
 alias rm='rm -I --preserve-root'
 
-# confirmation #
+# confirmation
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
 
-# Parenting changing perms on / #
+# parenting changing perms on /
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # reload bash config
-alias reload="source ~/.bashrc"
+alias reload='source "$HOME/.bashrc"'
