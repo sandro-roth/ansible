@@ -1,6 +1,8 @@
 ---
 - name: system setup | docker | macOS install Docker Desktop
   become: false
-  community.general.homebrew_cask:
-    name: "{{ docker_mac_cask }}"
-    state: present
+  block:
+    - name: install Docker Desktop
+      community.general.homebrew_cask:
+        name: "{{ docker_mac_cask }}"
+        state: present
