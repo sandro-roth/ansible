@@ -1,14 +1,14 @@
 - name: users | sandro | create group
   tags: groups, sandro, users
   group:
-    name: "{{ ansible_group }}"
+    name: "{{ usr_group }}"
     state: present
 
 - name: users | sandro | create user (Linux)
   tags: sandro, sudo, users
   user:
-    name: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    name: "{{ main_user }}"
+    group: "{{ usr_group }}"
     groups: "{{ usr_extra_groups }}"
     state: present
     comment: "Sandro main"
@@ -21,8 +21,8 @@
 - name: users | sandro | create user (macOs)
   tags: sandro, sudo, users
   user:
-    name: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    name: "{{ main_user }}"
+    group: "{{ usr_group }}"
     groups: "{{ usr_extra_groups }}"
     state: present
     comment: "Sandro main"
@@ -47,8 +47,8 @@
   file:
     path: "{{ item.dir }}"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0700
   with_items:
     - { dir: '{{ usr_home }}/.ssh' }
@@ -56,7 +56,7 @@
 - name: users | sandro | add public key
   tags: dotfiles, sandro, ssh, ssh-keys, users
   authorized_key:
-    user: "{{ ansible_user }}"
+    user: "{{ main_user }}"
     state: present
     key: "{{ item }}"
   with_file:
@@ -68,8 +68,8 @@
   file:
     path: "{{ usr_home }}/{{ item.dir }}"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0700
   with_items:
     - { dir: '.bash' }
@@ -91,8 +91,8 @@
   copy:
     src: users/sandro/tmux/tmux.conf.server
     dest: "{{ usr_home }}/.tmux.conf"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0600
   when: "'server' in group_names"
 
@@ -102,8 +102,8 @@
   copy:
     src: users/sandro/tmux/tmux.conf.workstation
     dest: "{{ usr_home }}/.tmux.conf"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0600
   when: "'server' not in group_names"
 
@@ -112,8 +112,8 @@
   copy:
     src: "users/sandro/{{ item.src }}"
     dest: "{{ usr_home }}/{{ item.dest }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0600
   with_items:
     - { src: 'bash/bash_aliases', dest: '.bash/bash_aliases' }
@@ -134,8 +134,8 @@
   copy:
     src: "users/sandro/zsh/{{ item.src }}"
     dest: "{{ usr_home }}/.zsh/{{ item.src }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0600
   with_items:
     - { src: 'aliases.zsh' }
@@ -155,8 +155,8 @@
   copy:
     src: "users/sandro/vim/{{ item.src }}"
     dest: "{{ usr_home }}/.vim/ftplugin/{{ item.src }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0600
   with_items:
     - { src: 'html.vim' }
@@ -169,8 +169,8 @@
   copy:
     src: "users/sandro/vim/{{ item.src }}"
     dest: "{{ usr_home }}/.vim/colors/{{ item.src }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0600
   with_items:
     - { src: 'bubblegum-256-dark.vim' }
@@ -184,8 +184,8 @@
   copy:
     src: "users/sandro/vim/{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_group }}"
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
     mode: 0700
   with_items:
     - { src: 'pathogen.vim', dest: '{{ usr_home }}/.vim/autoload/pathogen.vim' }
