@@ -1,5 +1,5 @@
 # Set history file
-HISTFILE=~/.zhistory
+HISTFILE="$HOME/.zhistory"
 
 # Set history size
 HISTSIZE=1000
