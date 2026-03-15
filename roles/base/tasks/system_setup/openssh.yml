@@ -55,6 +55,25 @@
     mode: "0644"
   when: ansible_os_family == "Darwin"
 
+- name: system setup | openssh | configure sshd settings (Linux and macOS)
+  tags: openssh, ssh, system, settings
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    marker: "# {mark} ANSIBLE MANAGED SSH SETTINGS"
+    block: |
+      Port {{ security_ssh_port }}
+      PasswordAuthentication {{ security_ssh_password_authentication }}
+      PermitRootLogin {{ security_ssh_permit_root_login }}
+      UseDNS {{ security_ssh_usedns }}
+      PermitEmptyPasswords {{ security_ssh_permit_empty_password }}
+      ChallengeResponseAuthentication {{ security_ssh_challenge_response_auth }}
+      GSSAPIAuthentication {{ security_ssh_gss_api_authentication }}
+      X11Forwarding {{ security_ssh_x11_forwarding }}
+      AllowUsers {{ security_ssh_allowed_users }}
+  notify: "{{ 'restart_sshd_macos' if ansible_os_family == 'Darwin' else 'restart_sshd' }}"
+  when:
+    - ansible_system == "Linux" or ansible_os_family == "Darwin"
+    - security_ssh_port is defined
 
 
 - name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }} (Linux)
@@ -66,45 +85,4 @@
   changed_when: false
   when:
     - ansible_system == "Linux"
-    - security_ssh_port is defined
-
-# macOS: use the built-in SSH server (Remote Login), not Homebrew OpenSSH
-- name: system setup | openssh | enable Remote Login (macOS SSH server)
-  tags: openssh, ssh, system, settings
-  command: systemsetup -setremotelogin on
-  when: ansible_os_family == "Darwin"
-
-- name: system setup | openssh | ensure /etc/ssh/sshd_config exists (macOS)
-  tags: openssh, ssh, system, settings
-  file:
-    path: /etc/ssh
-    state: directory
-    owner: root
-    group: wheel
-    mode: "0755"
-  when: ansible_os_family == "Darwin"
-
-- name: system setup | openssh | set sshd port in /etc/ssh/sshd_config (macOS)
-  tags: openssh, ssh, system, settings
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#?Port\s+'
-    line: "Port {{ security_ssh_port }}"
-    create: true
-  notify: restart_sshd_macos
-  when:
-    - ansible_os_family == "Darwin"
-    - security_ssh_port is defined
-
-- name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }} (macOS)
-  tags: openssh, ssh, system, settings
-  become: false
-  shell: "netstat -an | grep '\\.{{ security_ssh_port }} ' | grep LISTEN"
-  register: ssh_port_check_macos
-  retries: 10
-  delay: 2
-  until: ssh_port_check_macos.stdout != ""
-  changed_when: false
-  when:
-    - ansible_os_family == "Darwin"
     - security_ssh_port is defined
