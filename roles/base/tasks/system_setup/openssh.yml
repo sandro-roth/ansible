@@ -15,16 +15,27 @@
   changed_when: false
   when: ansible_os_family == "Darwin"
 
-- name: system setup | openssh | generate sshd_config file from template (Linux)
+- name: system setup | openssh | ensure ssh config directory exists (Linux)
   tags: openssh, ssh, system, settings
-  template:
-    src: sshd_config.j2
-    dest: /etc/ssh/sshd_config
+  file:
+    path: /etc/ssh
+    state: directory
     owner: root
     group: root
-    mode: "0644"
-  notify: restart_sshd
+    mode: "0755"
   when: ansible_system == "Linux"
+
+- name: system setup | openssh | ensure ssh config directory exists (macOS)
+  tags: openssh, ssh, system, settings
+  file:
+    path: /etc/ssh
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+  when: ansible_os_family == "Darwin"
+
+
 
 - name: system setup | openssh | ensure sshd is enabled and running (Linux)
   tags: openssh, ssh, system, settings
