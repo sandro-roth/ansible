@@ -9,6 +9,12 @@
     - openssh_package is defined
     - openssh_package | length > 0
 
+- name: system setup | openssh | enable Remote Login (macOS)
+  tags: openssh, ssh, system, settings
+  command: systemsetup -setremotelogin on
+  changed_when: false
+  when: ansible_os_family == "Darwin"
+
 - name: system setup | openssh | generate sshd_config file from template (Linux)
   tags: openssh, ssh, system, settings
   template:
