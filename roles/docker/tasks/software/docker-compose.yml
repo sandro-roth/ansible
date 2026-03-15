@@ -1,43 +1,39 @@
 ---
-- name: docker setup | Check current docker-compose version.
+- name: docker setup | check current docker-compose version
   tags: docker, docker-compose, check version
   command: "{{ docker_compose_path }} --version"
-  when:
-    - ansible_system != 'Darwin'
-    - docker_install_compose | bool
+  when: docker_install_compose | bool
   register: docker_compose_vsn
   check_mode: false
   changed_when: false
   failed_when: false
 
-- set_fact:
+- name: docker setup | set current docker-compose version fact
+  set_fact:
     docker_compose_current_version: "{{ docker_compose_vsn.stdout | regex_search('(\\d+(\\.\\d+)+)') }}"
   when:
-    - ansible_system != 'Darwin'
     - docker_install_compose | bool
     - docker_compose_vsn.stdout is defined
-    - (docker_compose_vsn.stdout | length > 0)
+    - docker_compose_vsn.stdout | length > 0
 
-- name: docker setup | delete existing docker-compose version if it's different.
+- name: docker setup | delete existing docker-compose version if different
   tags: docker, docker-compose, delete current version
   file:
     path: "{{ docker_compose_path }}"
     state: absent
   when: >
-    ansible_system != 'Darwin'
-    and (docker_install_compose | bool)
+    (docker_install_compose | bool)
     and docker_compose_current_version is defined
     and (docker_compose_version | regex_replace('v', '')) not in docker_compose_current_version
 
-- name: docker setup | install Docker Compose (if configured).
+- name: docker setup | install docker-compose if configured
   tags: docker, docker-compose, install newest version
   get_url:
     url: "{{ docker_compose_url }}"
     dest: "{{ docker_compose_path }}"
-    mode: 0755
+    mode: "0755"
   when: >
-    ansible_system != 'Darwin'
-    and (docker_install_compose | bool)
+    (docker_install_compose | bool)
     and ((docker_compose_current_version is not defined)
     or (docker_compose_current_version | length == 0)
-    or (docker_compose_current_version is version((docker_compose_version | regex_replace('v', '')), '<'))
+    or (docker_compose_current_version is version((docker_compose_version | regex_replace('v', '')), '<')))

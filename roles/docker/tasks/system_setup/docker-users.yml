@@ -1,29 +1,25 @@
-- name: Get docker group info using getent.
+---
+- name: system setup | docker | get docker group info
   getent:
     database: group
     key: docker
     split: ':'
-  when:
-    - ansible_system != 'Darwin'
-    - docker_users | length > 0
+  when: docker_users | length > 0
 
-- name: Check if there are any users to add to the docker group.
+- name: system setup | docker | check if at least one user needs docker group
   set_fact:
     at_least_one_user_to_modify: true
   when:
-    - ansible_system != 'Darwin'
     - docker_users | length > 0
     - item not in ansible_facts.getent_group["docker"][2]
-  with_items: "{{ docker_users }}"
+  loop: "{{ docker_users }}"
 
 - name: system setup | docker | add users to docker group
   user:
     name: "{{ item }}"
     groups: docker
     append: true
-  when: ansible_system != 'Darwin'
-  with_items: "{{ docker_users }}"
+  loop: "{{ docker_users }}"
 
-- name: Reset ssh connection to apply user changes.
+- name: system setup | docker | reset ssh connection
   meta: reset_connection
-  when: ansible_system != 'Darwin'
