@@ -3,24 +3,26 @@ alias ..='cd ..'
 alias ...='cd ../../..'
 alias ....='cd ../../../..'
 alias back='cd "$OLDPWD"'
-alias c='clear'
 alias cd..='cd ..'
+
+# terminal
+alias c='clear'
+alias h='history'
+alias reload='source "$HOME/.bashrc"'
 
 # editor
 alias e='vim -O'
 alias E='vim -o'
 alias svim='sudo vim'
 
-# history
-alias h='history'
-alias reload='source "$HOME/.bashrc"'
-
-# network and misc
+# network / misc
 alias extip='curl -fsSL icanhazip.com'
-alias ssha='eval "$(ssh-agent -s)" && ssh-add'
-alias tn='tmux new -s'
 alias weather='curl -fsSL wttr.in'
 alias wget='wget -c'
+alias ssha='eval "$(ssh-agent -s)" && ssh-add'
+
+# tmux
+alias tn='tmux new -s'
 
 # file operations
 alias mkdir='mkdir -pv'
@@ -38,38 +40,40 @@ alias cpu10='ps aux | sort -nr -k 3 | head -10'
 alias dir5='du -cksh ./* 2>/dev/null | sort -hr | head -n 5'
 alias dir10='du -cksh ./* 2>/dev/null | sort -hr | head -n 10'
 
-# grep color, only if supported
+# grep color if supported
 if grep --color=auto "" /dev/null >/dev/null 2>&1; then
   alias grep='grep --color=auto'
 fi
 
-# ls variants, Linux and macOS separately
+# ls variants (Linux vs macOS)
 if ls --color=auto >/dev/null 2>&1; then
   alias ls='ls -lhF --time-style=long-iso --color=auto'
   alias l.='ls -lhFa --time-style=long-iso --color=auto'
-  alias ll='ls'
 else
   alias ls='ls -lhFG'
   alias l.='ls -lhFaG'
-  alias ll='ls'
 fi
 
-# chmod alias, only if supported
-if chmod -c . >/dev/null 2>&1; then
-  alias chmod='chmod -c'
-fi
+alias ll='ls'
 
-# safety nets, GNU only where available
-if rm --preserve-root / >/dev/null 2>&1; then
+# safety nets
+if rm --help 2>/dev/null | grep -q -- '--preserve-root'; then
   alias rm='rm -I --preserve-root'
   alias chown='chown --preserve-root'
-  alias chgrp='chgrp --preserve-root'
   alias chmod='chmod --preserve-root'
+  alias chgrp='chgrp --preserve-root'
 else
   alias rm='rm -I'
 fi
 
-# package management
+# speedtest using python if available
+if command -v python3 >/dev/null 2>&1; then
+  alias speedtest='curl -fsSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
+elif command -v python >/dev/null 2>&1; then
+  alias speedtest='curl -fsSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+fi
+
+# package management helpers
 if [ -x /usr/bin/apt ]; then
   alias update='sudo apt update'
   alias upgrade='sudo apt update && sudo apt dist-upgrade && sudo apt autoremove && sudo apt clean'
@@ -82,25 +86,17 @@ if [ -x /usr/bin/pacman ]; then
   alias install='sudo pacman -S'
 fi
 
-if [ -x /opt/homebrew/bin/brew ] || command -v brew >/dev/null 2>&1; then
+if command -v brew >/dev/null 2>&1; then
   alias update='brew update'
   alias upgrade='brew upgrade && brew cleanup'
   alias install='brew install'
 fi
 
-# Linux specific helpers
+# ports helper
 if [ "$(uname)" = "Linux" ]; then
   alias ports='netstat -tulanp'
 fi
 
-# macOS specific helpers
 if [ "$(uname)" = "Darwin" ]; then
   alias ports='netstat -anv | grep LISTEN'
-fi
-
-# speedtest, prefer python3 if available
-if command -v python3 >/dev/null 2>&1; then
-  alias speedtest='curl -fsSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -'
-elif command -v python >/dev/null 2>&1; then
-  alias speedtest='curl -fsSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
 fi
