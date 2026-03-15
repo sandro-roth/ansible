@@ -1,1 +1,7 @@
-path+=/home/sandro/.local/bin
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if [ -d "$HOME/.local/bin" ]; then
+  path+=("$HOME/.local/bin")
+fi
