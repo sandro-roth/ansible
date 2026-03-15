@@ -35,18 +35,27 @@
     mode: "0755"
   when: ansible_os_family == "Darwin"
 
-
-
-- name: system setup | openssh | ensure sshd is enabled and running (Linux)
+- name: system setup | openssh | ensure sshd_config exists (Linux)
   tags: openssh, ssh, system, settings
-  service:
-    name: "{{ openssh_service }}"
-    enabled: true
-    state: started
-  when:
-    - ansible_system == "Linux"
-    - openssh_service is defined
-    - openssh_service | length > 0
+  file:
+    path: /etc/ssh/sshd_config
+    state: touch
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_system == "Linux"
+
+- name: system setup | openssh | ensure sshd_config exists (macOS)
+  tags: openssh, ssh, system, settings
+  file:
+    path: /etc/ssh/sshd_config
+    state: touch
+    owner: root
+    group: wheel
+    mode: "0644"
+  when: ansible_os_family == "Darwin"
+
+
 
 - name: system setup | openssh | check SSH is listening on port {{ security_ssh_port }} (Linux)
   tags: openssh, ssh, system, settings
