@@ -38,6 +38,4 @@ docker_users:
   - "{{ main_user }}"
 
 # Docker daemon option as a dict
-docker_daemon_options:
-  api-cors-header: ""
-  authorization-plugins: []
+docker_daemon_options: {}
