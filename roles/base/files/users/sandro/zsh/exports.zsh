@@ -1,4 +1,4 @@
-export TERM=xterm-256color
+#export TERM=xterm-256color
 export EDITOR="vim"
 export GREP_COLOR='3;33'
 

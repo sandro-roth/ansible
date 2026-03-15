@@ -8,7 +8,7 @@ source "$HOME/.bash/bash_aliases"
 source "$HOME/.bash/bash_functions"
 
 # env
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export EDITOR=vim
 
 # Homebrew on macOS
