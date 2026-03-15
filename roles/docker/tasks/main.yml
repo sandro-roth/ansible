@@ -15,6 +15,8 @@
     - include_tasks: "system_setup/setup-{{ docker_os_key }}.yml"
 
     - import_tasks: system_setup/docker-packages.yml
+      when: ansible_system != "Darwin"
+
     - import_tasks: software/docker-compose-plugin.yml
     - import_tasks: system_setup/directory.yml
     - import_tasks: software/docker-compose.yml
