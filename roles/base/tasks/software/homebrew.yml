@@ -4,15 +4,44 @@
         path: /opt/homebrew/bin/brew
       register: brew_stat
 
+    - name: software | homebrew | create homebrew directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: staff
+        mode: "0755"
+      loop:
+        - /opt/homebrew
+        - /opt/homebrew/bin
+        - /opt/homebrew/etc
+        - /opt/homebrew/include
+        - /opt/homebrew/lib
+        - /opt/homebrew/sbin
+        - /opt/homebrew/share
+        - /opt/homebrew/var
+        - /opt/homebrew/Cellar
+        - /opt/homebrew/Frameworks
+      become: true
+      when: not brew_stat.stat.exists
+
     - name: software | homebrew | install homebrew
-      shell: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       args:
         creates: /opt/homebrew/bin/brew
+      environment:
+        NONINTERACTIVE: "1"
+      become: false
       when: not brew_stat.stat.exists
+
+    - name: software | homebrew | refresh brew stat
+      stat:
+        path: /opt/homebrew/bin/brew
+      register: brew_stat_after
 
     - name: software | homebrew | ensure PATH includes brew
       set_fact:
         brew_path: /opt/homebrew/bin
-      when: brew_stat.stat.exists
+      when: brew_stat_after.stat.exists
+
   become: false
