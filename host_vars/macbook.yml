@@ -1,7 +1,6 @@
 ---
 branch: main
 
-ansible_user: sandro
 ansible_python_interpreter: /usr/bin/python3
 
 # User
