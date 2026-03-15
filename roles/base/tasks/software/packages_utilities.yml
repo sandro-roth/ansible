@@ -48,7 +48,6 @@
       - rename
       - rsync
       - tmux
-      - traceroute
       - vim
       - wget
       - whois
