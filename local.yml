@@ -1,12 +1,12 @@
 - hosts: mac
-  tags: always, bootstrap
+  tags: bootstrap
   gather_facts: false
   become: true
   roles:
     - bootstrap
 
 - hosts: all
-  tags: always, bootstrap
+  tags: bootstrap
   gather_facts: false
   tasks:
     - name: gather facts after bootstrap
