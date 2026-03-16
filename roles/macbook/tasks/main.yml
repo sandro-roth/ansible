@@ -2,3 +2,7 @@
     # Specific mac terminal settings (Terminal.app and iTerm2)
     - name: macbook | system setup | terminal
       import_tasks: system_setup/terminal.yml
+
+    # Dock settings
+    - name: macbook | system setup | dock
+      import_tasks: system_setup/dock.yml
