@@ -41,15 +41,15 @@
       ansible.builtin.command: dockutil --add "{{ item }}" --no-restart
       changed_when: true
       with_items:
-        - { '/System/Library/CoreServices/Finder.app' }
-        - { '/System/Applications/App Store.app' }
-        - { '/System/Applications/Mail.app' }
-        - { '/System/Applications/System Settings.app' }
-        - { '/System/Applications/Preview.app' }
-        - { '/System/Applications/Utilities/Terminal.app' }
+        - /System/Library/CoreServices/Finder.app
+        - /System/Applications/App Store.app
+        - /System/Applications/Mail.app
+        - /System/Applications/System Settings.app
+        - /System/Applications/Preview.app
+        - /System/Applications/Utilities/Terminal.app
 
     - name: macbook | dock | restart dock
-      ansible.builtin.command: kill Dock
+      ansible.builtin.command: killall Dock
       changed_when: true
 
   become: false
