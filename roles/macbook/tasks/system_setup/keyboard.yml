@@ -1,0 +1,10 @@
+- block:
+
+    - name: macbook | keyboard | disable automatic spelling correction
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: NSAutomaticSpellingCorrectionEnabled
+        type: bool
+        value: false
+
+  become: false
