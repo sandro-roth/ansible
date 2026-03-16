@@ -43,11 +43,11 @@
         value: false
 
     - name: macbook | dock | remove all dock apps
-      ansible.builtin.command: dockutil --remove all --no-restart
+      ansible.builtin.command: "{{ macbook_dockutil_path }} --remove all --no-restart"
       changed_when: true
 
     - name: macbook | dock | add wanted dock apps
-      ansible.builtin.command: dockutil --add "{{ item }}" --no-restart
+      ansible.builtin.command: "{{ macbook_dockutil_path }} --add '{{ item }}' --no-restart"
       loop: "{{ macbook_dock_apps }}"
       changed_when: true
 
