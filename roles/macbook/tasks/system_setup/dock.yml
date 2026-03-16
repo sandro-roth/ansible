@@ -39,13 +39,7 @@
 
     - name: macbook | dock | add wanted dock apps
       ansible.builtin.command: dockutil --add "{{ item }}" --no-restart
-      loop:
-        - /System/Library/CoreServices/Finder.app
-        - /System/Applications/App Store.app
-        - /System/Applications/Mail.app
-        - /System/Applications/System Settings.app
-        - /System/Applications/Preview.app
-        - /System/Applications/Utilities/Terminal.app
+      loop: "{{ macbook_dock_apps }}"
       changed_when: true
 
     - name: macbook | dock | restart dock
