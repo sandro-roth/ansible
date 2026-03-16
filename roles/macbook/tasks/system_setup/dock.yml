@@ -4,15 +4,7 @@
       community.general.homebrew:
         name: dockutil
         state: present
-
-    - name: macbook | dock | get homebrew prefix
-      ansible.builtin.command: brew --prefix
-      register: macbook_homebrew_prefix
-      changed_when: false
-
-    - name: macbook | dock | set dockutil path
-      ansible.builtin.set_fact:
-        macbook_dockutil_path: "{{ macbook_homebrew_prefix.stdout }}/bin/dockutil"
+        path: "{{ macbook_homebrew_bin }}"
 
     - name: macbook | dock | position dock on the left
       community.general.osx_defaults:
@@ -43,11 +35,21 @@
         value: false
 
     - name: macbook | dock | remove all dock apps
-      ansible.builtin.command: "{{ macbook_dockutil_path }} --remove all --no-restart"
+      ansible.builtin.command:
+        argv:
+          - "{{ macbook_homebrew_bin }}/dockutil"
+          - --remove
+          - all
+          - --no-restart
       changed_when: true
 
     - name: macbook | dock | add wanted dock apps
-      ansible.builtin.command: "{{ macbook_dockutil_path }} --add '{{ item }}' --no-restart"
+      ansible.builtin.command:
+        argv:
+          - "{{ macbook_homebrew_bin }}/dockutil"
+          - --add
+          - "{{ item }}"
+          - --no-restart
       loop: "{{ macbook_dock_apps }}"
       changed_when: true
 
