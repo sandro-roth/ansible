@@ -49,7 +49,7 @@
 
 - hosts: mac
   tags: macbook
-  gather_facts: false
+  gather_facts: true
   become: true
   roles:
     - macbook
@@ -80,4 +80,4 @@
       purge: yes
     when: ansible_distribution in ["Debian", "Ubuntu"]
 
-# add send completion and failure alret!
+# add send completion and failure alert!
