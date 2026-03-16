@@ -12,7 +12,6 @@ iterm2_non_ascii_font: "JetBrainsMonoNL-Regular 16"
 
 # Dock settings
 macbook_dock_apps:
-  - /System/Library/CoreServices/Finder.app
   - /System/Applications/App Store.app
   - /System/Applications/Mail.app
   - /System/Applications/System Settings.app
