@@ -1,0 +1,80 @@
+---
+- block:
+    - name: macbook | terminal | ensure Terminal profile directory exists
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/Library/Application Support/Terminal"
+        state: directory
+        mode: "0755"
+
+    - name: macbook | terminal | copy Terminal profile
+      ansible.builtin.copy:
+        src: terminal/{{ terminal_profile_name }}.terminal
+        dest: "{{ ansible_env.HOME }}/Library/Application Support/Terminal/{{ terminal_profile_name }}.terminal"
+        mode: "0644"
+      register: terminal_profile
+
+    - name: macbook | terminal | import Terminal profile
+      ansible.builtin.shell: >
+        open "{{ ansible_env.HOME }}/Library/Application Support/Terminal/{{ terminal_profile_name }}.terminal"
+      when: terminal_profile.changed
+
+    - name: macbook | terminal | set Terminal default profile
+      ansible.builtin.command:
+        argv:
+          - defaults
+          - write
+          - com.apple.Terminal
+          - Default Window Settings
+          - -string
+          - "{{ terminal_profile_name }}"
+
+    - name: macbook | terminal | set Terminal startup profile
+      ansible.builtin.command:
+        argv:
+          - defaults
+          - write
+          - com.apple.Terminal
+          - Startup Window Settings
+          - -string
+          - "{{ terminal_profile_name }}"
+
+    - name: macbook | iterm2 | ensure DynamicProfiles directory exists
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/Library/Application Support/iTerm2/DynamicProfiles"
+        state: directory
+        mode: "0755"
+
+    - name: macbook | iterm2 | install managed font profile
+      ansible.builtin.template:
+        src: iterm2/sandro-font-profile.json.j2
+        dest: "{{ ansible_env.HOME }}/Library/Application Support/iTerm2/DynamicProfiles/sandro-font-profile.json"
+        mode: "0644"
+      register: iterm_profile
+
+    - name: macbook | iterm2 | disable pinch to change font size
+      ansible.builtin.command:
+        argv:
+          - defaults
+          - write
+          - com.googlecode.iterm2
+          - PinchToChangeFontSizeDisabled
+          - -bool
+          - "true"
+
+    - name: macbook | terminal | restart terminal apps if running
+      block:
+
+        - name: macbook | terminal | restart Terminal if running
+          ansible.builtin.command: killall Terminal
+          failed_when: false
+          changed_when: false
+
+        - name: macbook | iterm2 | restart iTerm2 if running
+          ansible.builtin.command: killall iTerm2
+          failed_when: false
+          changed_when: false
+
+      when:
+        - terminal_profile.changed or iterm_profile.changed
+
+  become: false
