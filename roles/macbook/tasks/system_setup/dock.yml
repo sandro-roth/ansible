@@ -1,0 +1,55 @@
+- block:
+
+    - name: macbook | dock | ensure dockutil is installed
+      community.general.homebrew:
+        name: dockutil
+        state: present
+
+    - name: macbook | dock | position dock on the left
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: orientation
+        type: string
+        value: left
+
+    - name: macbook | dock | enable auto hide
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: autohide
+        type: bool
+        value: true
+
+    - name: macbook | dock | use scale effect for minimizing
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: mineffect
+        type: string
+        value: scale
+
+    - name: macbook | dock | disable recent apps
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: show-recents
+        type: bool
+        value: false
+
+    - name: macbook | dock | remove all dock apps
+      ansible.builtin.command: dockutil --remove all --no-restart
+      changed_when: true
+
+    - name: macbook | dock | add wanted dock apps
+      ansible.builtin.command: dockutil --add "{{ item }}" --no-restart
+      changed_when: true
+      with_items:
+        - { '/System/Library/CoreServices/Finder.app' }
+        - { '/System/Applications/App Store.app' }
+        - { '/System/Applications/Mail.app' }
+        - { '/System/Applications/System Settings.app' }
+        - { '/System/Applications/Preview.app' }
+        - { '/System/Applications/Utilities/Terminal.app' }
+
+    - name: macbook | dock | restart dock
+      ansible.builtin.command: kill Dock
+      changed_when: true
+
+  become: false
