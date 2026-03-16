@@ -6,3 +6,7 @@
     # Dock settings
     - name: macbook | system setup | dock
       import_tasks: system_setup/dock.yml
+
+    # Siri settings
+    - name: macbook | system setup | siri
+      import_tasks: system_setup/siri.yml
