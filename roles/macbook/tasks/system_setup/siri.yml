@@ -1,0 +1,16 @@
+- block:
+    - name: macbook | siri | disable siri assistant
+      community.general.osx_defaults:
+        domain: com.apple.assistant.support
+        key: "Assistant Enabled"
+        type: bool
+        value: false
+
+    - name: macbook | siri | hide siri menu icon
+      community.general.osx_defaults:
+        domain: com.apple.Siri
+        key: StatusMenuVisible
+        type: bool
+        value: false
+
+  become: false
