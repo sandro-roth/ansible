@@ -14,3 +14,5 @@
     # Siri settings
     - name: macbook | system setup | siri
       import_tasks: system_setup/siri.yml
+
+  when: ansible_os_family == "Darwin"
