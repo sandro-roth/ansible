@@ -6,11 +6,11 @@
     - bootstrap
 
 - hosts: all
-  tags: bootstrap
+  tags: always, bootstrap
   gather_facts: false
   tasks:
     - name: gather facts after bootstrap
-      setup:
+      ansible.builtin.setup:
 
 # tasks to complete before running roles
 - hosts: all
@@ -49,7 +49,7 @@
 
 - hosts: mac
   tags: macbook
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - macbook
