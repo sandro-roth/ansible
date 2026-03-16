@@ -3,6 +3,10 @@
     - name: macbook | system setup | terminal
       import_tasks: system_setup/terminal.yml
 
+    # Keyboard settings
+    - name: macbook | system setup | keyboard
+      import_tasks: system_setup/keyboard.yml
+
     # Dock settings
     - name: macbook | system setup | dock
       import_tasks: system_setup/dock.yml
