@@ -23,3 +23,60 @@
 
   become: false
   notify: restart finder
+
+- block:
+    - name: macbook | finder sidebar | ensure sidebar editor dependencies are installed
+      community.general.homebrew:
+        name:
+          - git
+          - swift
+        state: present
+        path: "{{ macbook_homebrew_bin }}"
+
+    - name: macbook | finder sidebar | clone sbedit repository
+      ansible.builtin.git:
+        repo: https://github.com/fabienconus/sidebar-editor.git
+        dest: "{{ ansible_env.HOME }}/.local/src/sidebar-editor"
+        version: main
+
+    - name: macbook | finder sidebar | build sbedit
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/xcrun
+          - swift
+          - build
+          - -c
+          - release
+      args:
+        chdir: "{{ ansible_env.HOME }}/.local/src/sidebar-editor"
+      register: sbedit_build
+      changed_when: "'Build complete' in sbedit_build.stdout or sbedit_build.rc == 0"
+
+    - name: macbook | finder sidebar | remove all sidebar favorites
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_env.HOME }}/.local/src/sidebar-editor/.build/release/sbedit"
+          - --removeAll
+      changed_when: true
+      notify: restart finder
+
+    - name: macbook | finder sidebar | add wanted sidebar favorites
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_env.HOME }}/.local/src/sidebar-editor/.build/release/sbedit"
+          - --add
+          - "{{ item }}"
+      loop: "{{ macbook_finder_sidebar_items }}"
+      changed_when: true
+      notify: restart finder
+
+    - name: macbook | finder sidebar | reload sidebar
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_env.HOME }}/.local/src/sidebar-editor/.build/release/sbedit"
+          - --reload
+          - --force
+      changed_when: true
+      notify: restart finder
+
+  become: false
