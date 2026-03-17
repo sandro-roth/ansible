@@ -15,4 +15,8 @@
     - name: macbook | system setup | siri
       import_tasks: system_setup/siri.yml
 
+    # Finder settings
+    - name: macbook | system setup | finder
+      import_tasks: system_setup/finder.yml
+
   when: ansible_os_family == "Darwin"
