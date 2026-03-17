@@ -21,8 +21,5 @@
         type: bool
         value: true
 
-    - name: macbook | finder | restart finder
-      ansible.builtin.command: killall Finder
-      changed_when: true
-
   become: false
+  notify: restart finder

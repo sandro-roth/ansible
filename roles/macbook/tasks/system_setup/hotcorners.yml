@@ -30,6 +30,5 @@
         type: int
         value: 0
 
-    - notify: restart dock
-
   become: false
+  notify: restart dock

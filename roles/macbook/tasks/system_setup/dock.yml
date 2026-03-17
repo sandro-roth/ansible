@@ -53,6 +53,5 @@
       loop: "{{ macbook_dock_apps }}"
       changed_when: true
 
-    - notify: restart dock
-
   become: false
+  notify: restart dock
