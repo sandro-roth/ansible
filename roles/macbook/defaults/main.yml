@@ -17,3 +17,11 @@ macbook_dock_apps:
   - /System/Applications/System Settings.app
   - /System/Applications/Preview.app
   - /System/Applications/Utilities/Terminal.app
+
+# Finder settings
+macbook_finder_sidebar_items:
+  - /System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app
+  - /Applications
+  - "{{ ansible_env.HOME }}/Documents"
+  - "{{ ansible_env.HOME }}/Downloads"
+  - "{{ ansible_env.HOME }}"
