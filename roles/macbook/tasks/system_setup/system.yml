@@ -1,0 +1,19 @@
+- block:
+
+    # Disable UI sound effects
+    - name: macbook | system | disable system sound effects
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: com.apple.sound.uiaudio.enabled
+        type: int
+        value: 0
+
+    # Sort System Settings alphabetically
+    - name: macbook | system | sort system settings alphabetically
+      community.general.osx_defaults:
+        domain: com.apple.systempreferences
+        key: CategorySortingMode
+        type: int
+        value: 1
+
+  become: false
