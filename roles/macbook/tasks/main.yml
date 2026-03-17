@@ -23,4 +23,7 @@
     - name: macbook | system setup | system
       import_tasks: system_setup/system.yml
 
+    - name: macbook | system setup | hotcorners
+      import_tasks: system_setup/hotcorners.yml
+
   when: ansible_os_family == "Darwin"
