@@ -1,0 +1,66 @@
+- block:
+    - name: macbook | finder sidebar ui | configure sidebar robust
+      ansible.builtin.shell: |
+        osascript <<'APPLESCRIPT'
+        tell application "Finder"
+          activate
+        end tell
+
+        tell application "System Events"
+          tell process "Finder"
+
+            keystroke "," using command down
+            delay 1
+
+            tell window 1
+              click button 1 of toolbar 1 -- Sidebar tab
+              delay 0.5
+
+              set cbList to checkboxes of group 1
+
+              -- Debug: number of checkboxes
+              -- display dialog (count of cbList as string)
+
+              repeat with i from 1 to count of cbList
+                try
+                  set cb to item i of cbList
+
+                  -- Disable unwanted (Recents + Shared)
+                  if i is 1 or i is 2 then
+                    if value of cb is 1 then click cb
+                  end if
+
+                  -- Enable wanted favorites
+                  if i ≥ 3 and i ≤ 7 then
+                    if value of cb is 0 then click cb
+                  end if
+
+                  -- Locations (keep only Computer + disks)
+                  if i ≥ 8 then
+                    if value of cb is 1 then click cb
+                  end if
+
+                end try
+              end repeat
+
+              -- Tags tab
+              click button 2 of toolbar 1
+              delay 0.5
+
+              repeat with cb in checkboxes of group 1
+                try
+                  if value of cb is 1 then click cb
+                end try
+              end repeat
+
+              keystroke "w" using command down
+            end tell
+
+          end tell
+        end tell
+        APPLESCRIPT
+      args:
+        executable: /bin/bash
+      changed_when: true
+
+  become: false

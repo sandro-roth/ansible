@@ -19,6 +19,9 @@
     - name: macbook | system setup | finder
       import_tasks: system_setup/finder.yml
 
+    - name: macbook | system setup | finder sidebar ui
+      import_tasks: system_setup/finder_sidebar_ui.yml
+
     # System settings
     - name: macbook | system setup | system
       import_tasks: system_setup/system.yml
