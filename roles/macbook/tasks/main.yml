@@ -19,4 +19,8 @@
     - name: macbook | system setup | finder
       import_tasks: system_setup/finder.yml
 
+    # System settings
+    - name: macbook | system setup | system
+      import_tasks: system_setup/system.yml
+
   when: ansible_os_family == "Darwin"
