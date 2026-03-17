@@ -1,0 +1,35 @@
+- block:
+
+    # Top right -> display sleep
+    - name: macbook | hotcorners | top right sleep display
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: wvous-tr-corner
+        type: int
+        value: 10
+
+    - name: macbook | hotcorners | top right modifier
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: wvous-tr-modifier
+        type: int
+        value: 0
+
+    # Bottom right -> desktop
+    - name: macbook | hotcorners | bottom right show desktop
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: wvous-br-corner
+        type: int
+        value: 4
+
+    - name: macbook | hotcorners | bottom right modifier
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: wvous-br-modifier
+        type: int
+        value: 0
+
+    - notify: restart dock
+
+  become: false
