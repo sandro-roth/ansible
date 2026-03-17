@@ -1,10 +1,17 @@
 - block:
 
-    - name: macbook | finder | set default folder to Home-folder
+    - name: macbook | finder | set default folder to Documents
       community.general.osx_defaults:
         domain: com.apple.finder
         key: NewWindowTarget
         type: string
         value: PfLo
+
+    - name: macbook | finder | set default folder path
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: NewWindowTargetPath
+        type: string
+        value: "file://${HOME}/Documents/"
 
   become: false
