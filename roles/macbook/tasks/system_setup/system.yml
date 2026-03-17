@@ -1,12 +1,29 @@
 - block:
 
     # Disable UI sound effects
-    - name: macbook | system | disable system sound effects
+    - name: macbook | system | disable user interface sound effects
       community.general.osx_defaults:
         domain: NSGlobalDomain
         key: com.apple.sound.uiaudio.enabled
         type: int
         value: 0
+      notify: restart systemuiserver
+
+    - name: macbook | system | disable feedback when volume is changed
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: com.apple.sound.beep.feedback
+        type: bool
+        value: false
+      notify: restart systemuiserver
+
+    - name: macbook | system | set alert volume to zero
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: com.apple.sound.beep.volume
+        type: float
+        value: 0.0
+      notify: restart systemuiserver
 
     # Sort System Settings alphabetically
     - name: macbook | system | sort system settings alphabetically
