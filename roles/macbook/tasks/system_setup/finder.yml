@@ -14,4 +14,15 @@
         type: string
         value: "file://${HOME}/Documents/"
 
+    - name: macbook | finder | show file extensions
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: AppleShowAllExtensions
+        type: bool
+        value: true
+
+    - name: macbook | finder | restart finder
+      ansible.builtin.command: killall Finder
+      changed_when: true
+      
   become: false
