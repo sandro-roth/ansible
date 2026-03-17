@@ -1,6 +1,6 @@
 - block:
 
-    - name: macbook | finder | set default folder to Documents
+    - name: macbook | finder | set default folder to Home-folder
       community.general.osx_defaults:
         domain: com.apple.finder
         key: NewWindowTarget
