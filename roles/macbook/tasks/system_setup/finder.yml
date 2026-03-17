@@ -1,0 +1,10 @@
+- block:
+
+    - name: macbook | finder | set default folder to Documents
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: NewWindowTarget
+        type: string
+        value: PfLo
+
+  become: false
