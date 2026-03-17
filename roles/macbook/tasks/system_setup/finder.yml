@@ -25,7 +25,7 @@
   notify: restart finder
 
 - block:
-    - name: macbook | finder sidebar | ensure sidebar editor dependencies are installed
+    - name: macbook | finder sidebar | ensure sidebar editor dependency is installed
       community.general.homebrew:
         name:
           - git
@@ -37,19 +37,29 @@
         repo: https://github.com/fabienconus/sidebar-editor.git
         dest: "{{ macbook_sbedit_root }}"
         version: main
+        force: true
+        update: true
 
-    - name: macbook | finder sidebar | build sbedit
+    - name: macbook | finder sidebar | check pkg exists
+      ansible.builtin.stat:
+        path: "{{ macbook_sbedit_pkg }}"
+      register: macbook_sbedit_pkg_stat
+
+    - name: macbook | finder sidebar | fail if pkg is missing
+      ansible.builtin.fail:
+        msg: "sbedit pkg was not found at {{ macbook_sbedit_pkg }}"
+      when: not macbook_sbedit_pkg_stat.stat.exists
+
+    - name: macbook | finder sidebar | install sbedit pkg
       ansible.builtin.command:
         argv:
-          - /usr/bin/xcrun
-          - swift
-          - build
-          - -c
-          - release
-      args:
-        chdir: "{{ macbook_sbedit_package_dir }}"
-      register: sbedit_build
-      changed_when: sbedit_build.rc == 0
+          - /usr/sbin/installer
+          - -pkg
+          - "{{ macbook_sbedit_pkg }}"
+          - -target
+          - /
+      become: true
+      changed_when: true
 
     - name: macbook | finder sidebar | remove all sidebar favorites
       ansible.builtin.command:

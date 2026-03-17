@@ -1,9 +1,9 @@
 ---
 # General settings
 macbook_homebrew_bin: /opt/homebrew/bin
+macbook_sbedit_binary: /usr/local/bin/sbedit
 macbook_sbedit_root: "{{ ansible_env.HOME }}/.local/src/sidebar-editor"
-macbook_sbedit_package_dir: "{{ macbook_sbedit_root }}/sbedit-package"
-macbook_sbedit_binary: "{{ macbook_sbedit_package_dir }}/.build/release/sbedit"
+macbook_sbedit_pkg: "{{ macbook_sbedit_root }}/sbedit-package/000sbedit-1.2/000sbedit-1.2.pkg"
 
 # Terminal settings
 terminal_profile_name: "Sandro"
