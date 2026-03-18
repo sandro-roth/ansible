@@ -17,6 +17,14 @@
         value: false
       notify: restart systemuiserver
 
+    - name: macbook | system | set alert sound to Breeze
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: com.apple.sound.beep.sound
+        type: string
+        value: "/System/Library/Sounds/Breeze.aiff"
+      notify: restart systemuiserver
+
     - name: macbook | system | set alert volume to zero
       community.general.osx_defaults:
         domain: NSGlobalDomain
