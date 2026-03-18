@@ -23,7 +23,7 @@ macbook_dock_apps:
 
 # Finder settings
 macbook_finder_sidebar_items:
-  - /System/Library/CoreServices/Finder.app/Contents/Applications
   - /Applications
   - "{{ ansible_env.HOME }}/Documents"
   - "{{ ansible_env.HOME }}/Downloads"
+  - "{{ ansible_env.HOME }}"

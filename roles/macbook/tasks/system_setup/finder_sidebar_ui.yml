@@ -1,6 +1,6 @@
 ---
 - block:
-    - name: macbook | finder sidebar ui | configure recents shared favorites and tags
+    - name: macbook | finder sidebar ui | configure finder sidebar
       ansible.builtin.shell: |
         osascript <<'APPLESCRIPT'
         tell application "Finder"
@@ -50,27 +50,62 @@
                 if value of item 2 of cbList is 1 then click item 2 of cbList
 
                 -- Favorites
-                -- 3 = AirDrop on
+                -- Applications on
                 if value of item 3 of cbList is 0 then click item 3 of cbList
 
-                -- 4 = Applications on
-                if value of item 4 of cbList is 0 then click item 4 of cbList
+                -- Desktop off
+                if value of item 4 of cbList is 1 then click item 4 of cbList
 
-                -- 5 = Documents on
+                -- Documents on
                 if value of item 5 of cbList is 0 then click item 5 of cbList
 
-                -- 6 = Downloads on
+                -- Downloads on
                 if value of item 6 of cbList is 0 then click item 6 of cbList
 
-                -- 7 = Home on
-                if value of item 7 of cbList is 0 then click item 7 of cbList
+                -- Movies off
+                if value of item 7 of cbList is 1 then click item 7 of cbList
 
-                -- 8, 9, 10 = remaining Favorites off
+                -- Music off
                 if value of item 8 of cbList is 1 then click item 8 of cbList
+
+                -- Pictures off
                 if value of item 9 of cbList is 1 then click item 9 of cbList
+
+                -- Locations
+                -- iCloud Drive off
                 if value of item 10 of cbList is 1 then click item 10 of cbList
 
-                -- Tags off
+                -- Cloud Storage off
+                if value of item 11 of cbList is 1 then click item 11 of cbList
+
+                -- Home off
+                if value of item 12 of cbList is 1 then click item 12 of cbList
+
+                -- MyBook on
+                if value of item 13 of cbList is 0 then click item 13 of cbList
+
+                -- Hard disks off
+                if value of item 14 of cbList is 1 then click item 14 of cbList
+
+                -- External disks on
+                if value of item 15 of cbList is 0 then click item 15 of cbList
+
+                -- CDs/DVDs/iOS off
+                if value of item 16 of cbList is 1 then click item 16 of cbList
+
+                -- AirDrop on
+                if value of item 17 of cbList is 0 then click item 17 of cbList
+
+                -- Bonjour computers off
+                if value of item 18 of cbList is 1 then click item 18 of cbList
+
+                -- Connected servers on
+                if value of item 19 of cbList is 0 then click item 19 of cbList
+
+                -- Trash off
+                if value of item 20 of cbList is 1 then click item 20 of cbList
+
+                -- Recent Tags off
                 if value of item 21 of cbList is 1 then click item 21 of cbList
               end tell
 
