@@ -7,4 +7,119 @@
         type: bool
         value: false
 
+    # Tap to click
+    - name: macbook | trackpad | enable tap to click on internal trackpad
+      community.general.osx_defaults:
+        domain: com.apple.AppleMultitouchTrackpad
+        key: Clicking
+        type: bool
+        value: true
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | enable tap to click on bluetooth trackpad domain
+      community.general.osx_defaults:
+        domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+        key: Clicking
+        type: bool
+        value: true
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | enable tap behavior globally
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: com.apple.mouse.tapBehavior
+        type: int
+        value: 1
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | enable tap behavior for current host
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        host: currentHost
+        key: com.apple.mouse.tapBehavior
+        type: int
+        value: 1
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    # Secondary click with two fingers
+    - name: macbook | trackpad | enable two finger secondary click on internal trackpad
+      community.general.osx_defaults:
+        domain: com.apple.AppleMultitouchTrackpad
+        key: TrackpadRightClick
+        type: bool
+        value: true
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | set internal trackpad secondary click mode to two fingers
+      community.general.osx_defaults:
+        domain: com.apple.AppleMultitouchTrackpad
+        key: TrackpadCornerSecondaryClick
+        type: int
+        value: 0
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | enable two finger secondary click on bluetooth trackpad domain
+      community.general.osx_defaults:
+        domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+        key: TrackpadRightClick
+        type: bool
+        value: true
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | set bluetooth trackpad secondary click mode to two fingers
+      community.general.osx_defaults:
+        domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+        key: TrackpadCornerSecondaryClick
+        type: int
+        value: 0
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | enable secondary click globally
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: com.apple.trackpad.enableSecondaryClick
+        type: bool
+        value: true
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | enable secondary click for current host
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        host: currentHost
+        key: com.apple.trackpad.enableSecondaryClick
+        type: bool
+        value: true
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
+    - name: macbook | trackpad | set current host secondary click mode to two fingers
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        host: currentHost
+        key: com.apple.trackpad.trackpadCornerClickBehavior
+        type: int
+        value: 0
+      notify:
+        - restart cfprefsd
+        - restart systemuiserver
+
   become: false

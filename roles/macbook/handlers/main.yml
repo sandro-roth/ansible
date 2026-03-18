@@ -11,4 +11,11 @@
 - name: restart systemuiserver
   ansible.builtin.command: killall SystemUIServer
   changed_when: true
+  failed_when: false
+  become: false
+
+- name: restart cfprefsd
+  command: killall cfprefsd
+  changed_when: true
+  failed_when: false
   become: false
