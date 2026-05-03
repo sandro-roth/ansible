@@ -63,6 +63,23 @@
     - users/sandro/ssh/id_ed25519.pub
     - users/sandro/ssh/ansible.pub
 
+- name: users | sandro | create development directories
+  tags: dev, sandro, users
+  file:
+    path: "{{ usr_home }}/{{ item.dir }}"
+    state: directory
+    owner: "{{ main_user }}"
+    group: "{{ usr_group }}"
+    mode: 0755
+  with_items:
+    - { dir: 'dev' }
+    - { dir: 'dev/projects' }
+    - { dir: 'dev/repos' }
+    - { dir: 'dev/repos/github' }
+    - { dir: 'dev/repos/gitlab' }
+    - { dir: 'dev/infra' }
+    - { dir: 'dev/labs' }
+
 - name: users | sandro | create config directories
   tags: dotfiles, sandro, tmux, users, vim, zsh
   file:
