@@ -13,8 +13,8 @@
       state: present
 
   - name: macbook | brew | install casks
-    community.general.homebrew_casks:
-      name: "{{ brew_casks }} "
+    community.general.homebrew_cask:
+      name: "{{ brew_casks }}"
       state: present
 
   become: false
