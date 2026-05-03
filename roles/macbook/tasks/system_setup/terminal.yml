@@ -51,6 +51,16 @@
         mode: "0644"
       register: iterm_profile
 
+    - name: macbook | iterm2 | set default profile
+      ansible.builtin.command:
+        argv:
+          - defaults
+          - write
+          - com.googlecode.iterm2
+          - "Default Bookmark Guid"
+          - -string
+          - "{{ iterm2_profile_guid }}"
+
     - name: macbook | iterm2 | disable pinch to change font size
       ansible.builtin.command:
         argv:
