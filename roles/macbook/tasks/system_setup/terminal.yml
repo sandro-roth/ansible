@@ -1,5 +1,19 @@
 ---
 - block:
+
+   - name: macbook | terminal | quit Terminal before changing
+     ansible.builtin.command: killall Terminal
+      failed_when: false
+      changed_when: false
+
+    - name: macbook | terminal | reset Terminal preferences
+      ansible.builtin.command:
+        argv:
+          - defaults
+          - delete
+          - com.apple.Terminal
+      failed_when: false
+
     - name: macbook | terminal | ensure Terminal profile directory exists
       ansible.builtin.file:
         path: "{{ ansible_env.HOME }}/Library/Application Support/Terminal"
