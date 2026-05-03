@@ -29,4 +29,8 @@
     - name: macbook | system setup | hotcorners
       import_tasks: system_setup/hotcorners.yml
 
+    # Brew installations
+    - name: software | brew installation
+      import_tasks: software/brew_apps.yml
+
   when: ansible_os_family == "Darwin"
