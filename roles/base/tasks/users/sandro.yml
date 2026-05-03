@@ -77,7 +77,10 @@
     - { dir: 'dev/repos' }
     - { dir: 'dev/repos/github' }
     - { dir: 'dev/repos/gitlab' }
-    - { dir: 'dev/infra' }
+    - { dir: 'dev/infra/ansible' }
+    - { dir: 'dev/infra/docker' }
+    - { dir: 'dev/infra/gitlab' }
+    - { dir: 'dev/infra/k8s' }
     - { dir: 'dev/labs' }
 
 - name: users | sandro | create config directories
