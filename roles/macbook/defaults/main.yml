@@ -29,3 +29,12 @@ macbook_finder_sidebar_items:
   - "{{ ansible_env.HOME }}/Documents"
   - "{{ ansible_env.HOME }}/Downloads"
   - "{{ ansible_env.HOME }}"
+
+# Brew installation
+brew_formulae:
+  - ansible
+
+brew_casks:
+  - nordvpn
+  - opera-gx
+  - visual-studio-code

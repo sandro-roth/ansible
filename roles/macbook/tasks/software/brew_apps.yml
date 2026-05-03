@@ -7,9 +7,14 @@
       upgrade_all: true
     when: brew_upgrade | default(false)
 
-  - name: macbook | brew | ansible
+  - name: macbook | brew | install formulae
     community.general.homebrew:
-      name: ansible
-      state: latest
+      name: "{{ brew_formulae }}"
+      state: present
+
+  - name: macbook | brew | install casks
+    community.general.homebrew_casks:
+      name: "{{ brew_casks }} "
+      state: present
 
   become: false
