@@ -7,11 +7,13 @@ macbook_sbedit_pkg: "{{ macbook_sbedit_root }}/sbedit-package/000sbedit-1.2/000s
 
 # Terminal settings
 terminal_profile_name: "Sandro"
-terminal_font_size: 24
+terminal_font_name: "SFMono-Regular"
+terminal_font_size: 18
+
 iterm2_profile_name: "Sandro Font"
 iterm2_profile_guid: "6DDD3F76-8C2C-4C4A-9D6D-31B9A2E6A111"
-iterm2_ascii_font: "JetBrainsMonoNL-Regular 24"
-iterm2_non_ascii_font: "JetBrainsMonoNL-Regular 24"
+iterm2_ascii_font: "SFMonoNL-Regular 18"
+iterm2_non_ascii_font: "SFMonoNL-Regular 18"
 
 # Dock settings
 macbook_dock_apps:

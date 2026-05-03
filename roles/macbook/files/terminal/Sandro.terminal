@@ -24,7 +24,7 @@
 	<key>columnCount</key>
 	<integer>123</integer>
 	<key>name</key>
-	<sring>Sandro</string>
+	<string>Sandro</string>
 	<key>rowCount</key>
 	<integer>34</integer>
 	<key>type</key>

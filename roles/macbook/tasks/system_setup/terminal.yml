@@ -1,18 +1,10 @@
 ---
 - block:
 
-   - name: macbook | terminal | quit Terminal before changing
-     ansible.builtin.command: killall Terminal
-     failed_when: false
-     changed_when: false
-
-    - name: macbook | terminal | reset Terminal preferences
-      ansible.builtin.command:
-        argv:
-          - defaults
-          - delete
-          - com.apple.Terminal
+    - name: macbook | terminal | quit Terminal
+      ansible.builtin.command: killall Terminal
       failed_when: false
+      changed_when: false
 
     - name: macbook | terminal | ensure Terminal profile directory exists
       ansible.builtin.file:
@@ -25,32 +17,54 @@
         src: terminal/{{ terminal_profile_name }}.terminal
         dest: "{{ ansible_env.HOME }}/Library/Application Support/Terminal/{{ terminal_profile_name }}.terminal"
         mode: "0644"
-      register: terminal_profile
+
+    - name: macbook | terminal | force profile name inside plist
+      ansible.builtin.command:
+        argv:
+          - plutil
+          - -replace
+          - name
+          - -string
+          - "{{ terminal_profile_name }}"
+          - "{{ ansible_env.HOME }}/Library/Application Support/Terminal/{{ terminal_profile_name }}.terminal"
 
     - name: macbook | terminal | import Terminal profile
-      ansible.builtin.shell: >
-        open "{{ ansible_env.HOME }}/Library/Application Support/Terminal/{{ terminal_profile_name }}.terminal"
-      when: terminal_profile.changed
+      ansible.builtin.command:
+        argv:
+          - open
+          - "{{ ansible_env.HOME }}/Library/Application Support/Terminal/{{ terminal_profile_name }}.terminal"
 
-    - name: macbook | terminal | set Terminal default profile
+    - name: macbook | terminal | force font size and default profile
+      ansible.builtin.shell: |
+        osascript <<APPLESCRIPT
+        tell application "Terminal"
+          activate
+          delay 2
+
+          set targetProfile to settings set "{{ terminal_profile_name }}"
+
+          set font name of targetProfile to "{{ terminal_font_name }}"
+          set font size of targetProfile to {{ terminal_font_size }}
+
+          set default settings to targetProfile
+          set startup settings to targetProfile
+        end tell
+        APPLESCRIPT
+      args:
+        executable: /bin/bash
+
+    - name: macbook | terminal | also write default profile via defaults
       ansible.builtin.command:
         argv:
           - defaults
           - write
           - com.apple.Terminal
-          - Default Window Settings
+          - "{{ item }}"
           - -string
           - "{{ terminal_profile_name }}"
-
-    - name: macbook | terminal | set Terminal startup profile
-      ansible.builtin.command:
-        argv:
-          - defaults
-          - write
-          - com.apple.Terminal
-          - Startup Window Settings
-          - -string
-          - "{{ terminal_profile_name }}"
+      loop:
+        - Default Window Settings
+        - Startup Window Settings
 
     - name: macbook | iterm2 | ensure DynamicProfiles directory exists
       ansible.builtin.file:
@@ -97,8 +111,5 @@
           ansible.builtin.command: killall iTerm2
           failed_when: false
           changed_when: false
-
-      when:
-        - terminal_profile.changed or iterm_profile.changed
 
   become: false
