@@ -42,7 +42,7 @@
     state: touch
     owner: root
     group: root
-    mode: "0644"
+    mode: "0600"
   when: ansible_system == "Linux"
 
 - name: system setup | openssh | ensure sshd_config exists (macOS)
