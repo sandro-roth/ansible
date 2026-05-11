@@ -33,6 +33,7 @@ macbook_finder_sidebar_items:
 # Brew installation
 brew_formulae:
   - ansible
+  - defaultbrowser
 
 brew_casks:
   - nordvpn
