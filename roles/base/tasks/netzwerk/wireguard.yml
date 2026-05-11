@@ -1,1 +1,32 @@
-test
+- name: networking | wireguard | install packages (Linux)
+  tags: wireguard,vpn,networking,packages
+  ansible.builtin.package:
+    state: present
+    name:
+      - wireguard
+      - wireguard-tools
+  when:
+    - ansible_os_family != "Darwin"
+    - install_wireguard | bool
+
+- name: networking | wireguard | install app (macOS)
+  tags: wireguard,vpn,networking,packages
+  become: false
+  community.general.homebrew_cask:
+    state: present
+    name: wireguard
+  when:
+    - ansible_os_family == "Darwin"
+    - install_wireguard | bool
+
+- name: networking | wireguard | ensure config directory exists (Linux)
+  tags: wireguard,vpn,networking
+  ansible.builtin.file:
+    path: /etc/wireguard
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+  when:
+    - ansible_os_family != "Darwin"
+    - install_wireguard | bool
