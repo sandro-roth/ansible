@@ -7,7 +7,7 @@ ansible_cron_minute: "40"
 # platform-specific
 microcode_amd_install: true
 microcode_intel_install: false
-
+install_wireguard: false
 
 # Autoupdate mail settings used on Debian/Ubuntu only
 security_autoupdate_enabled: true

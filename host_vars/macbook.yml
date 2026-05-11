@@ -13,3 +13,4 @@ microcode_amd_install: false
 microcode_intel_install: false
 security_autoupdate_enabled: false
 security_fail2ban_enabled: false
+install_wireguard: true
