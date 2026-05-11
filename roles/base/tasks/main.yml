@@ -43,6 +43,7 @@
   - import_tasks: system_setup/microcode.yml
   - import_tasks: system_setup/openssh.yml
   - import_tasks: system_setup/firmware.yml
+  - import_tasks: netzwerk/wireguard.yml
 
   rescue:
     - set_fact: task_failed=true
